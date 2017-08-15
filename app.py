@@ -20,15 +20,15 @@ def hello():
 def post_data(limit):
 	if request.method == "POST":
 		if not request.json:
-        	abort(400)
+			abort(400)
 		json_dict = request.get_json()
 		olx = OLX(**json_dict)
 		db.session.add(olx)
-        db.session.commit()
-        return jsonify({'success': True}), 201
+		db.session.commit()
+		return jsonify({'success': True}), 201
 
 @app.route('/fetch_data/<limit>', methods=['GET', 'POST'])
-def post_data(limit):
+def fetch_data(limit):
     if request.method == "GET":
     	olxs = OLX.query.limit(int(limit)).all()
     	return jsonify({'data': olxs})
