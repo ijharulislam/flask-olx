@@ -22,7 +22,6 @@ data = {
 	"image_urls":["http://img.olx.com.br/images/91/910712038681161.jpg",
 	"http://img.olx.com.br/images/91/915712030105770.jpg",
 	"http://img.olx.com.br/images/91/910712037593319.jpg"],
-
 	"month":"Agosto",
 	"phone":"http://static.bn-static.com/pg/0HxzsfNvMlSr0Fq6RGNDyGocoIf4+B89CKwXOCA1pRw==.gif",
 	"suburb":"Santa Quitéria",
@@ -35,6 +34,7 @@ data = {
 	"description":"Notebook Dell vostro 3550 com algumas melhorias.Tela de 15 polegadasProcessador i5 de 2.5 GHz com tubo boster alcança\naté 3.1 GHz.12 gigas de memória ram.HD SSD 240 GBPlaca Intel(R) HD Graphics 3000Teclado retro iluminadoBluetoothWi-FiWeb CamLeitor de cartãoLeitor biométricoHDMIGravador de CD/ DVDWindows 7 OBS: Bateria está viciadaNotebook reinicia em 7 segundos ótimo para\nprogramas pesados tipo Corel draw e entre outro\npesados de edição e jogos também. Em perfeito\nestado de conservação.Para vender logo quem conhece de computador sabe\nque está no preçoNetbook, PC, Computador, micro, computador de\nmesa, PC Gamer"
 }
 
+
 @app.route('/')
 def hello():
     return "Hello World!"
@@ -46,6 +46,7 @@ def post_data():
 		if not request.json:
 			abort(400)
 		json_dict = request.get_json()
+		print(json_dict)
 		olx = OLX(**json_dict)
 		db.session.add(olx)
 		db.session.commit()
