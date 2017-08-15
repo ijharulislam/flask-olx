@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
 
@@ -16,10 +16,22 @@ def hello():
     return "Hello World!"
 
 
-@app.route('/<name>')
-def hello_name(name):
-    return "Hello {}!".format(name)
+@app.route('/post_data', methods=['GET', 'POST'])
+def post_data(limit):
+	if request.method == "POST":
+		if not request.json:
+        	abort(400)
+		json_dict = request.get_json()
+		olx = OLX(**json_dict)
+		db.session.add(olx)
+        db.session.commit()
+        return jsonify({'success': True}), 201
 
+@app.route('/fetch_data/<limit>', methods=['GET', 'POST'])
+def post_data(limit):
+    if request.method == "GET":
+    	olxs = OLX.query.limit(int(limit)).all()
+    	return jsonify({'data': olxs})
 
 if __name__ == '__main__':
     app.run()
