@@ -1,8 +1,19 @@
 from app import db
 from sqlalchemy.dialects.postgresql import JSON
 
+from sqlalchemy.inspection import inspect
 
-class OLX(db.Model):
+class Serializer(object):
+
+    def serialize(self):
+        return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
+
+    @staticmethod
+    def serialize_list(l):
+        return [m.serialize() for m in l]
+
+
+class OLX(db.Model, Serializer):
     __tablename__ = 'olx'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -19,14 +30,14 @@ class OLX(db.Model):
     suburb = db.Column(db.String())
     zipcode = db.Column(db.String())
     adcode = db.Column(db.String())
-    image_urls = db.Column(db.String())
-    main_image_urls = db.Column(db.String())
+    image_urls = db.Column(JSON)
+    main_image_urls = db.Column(JSON)
     day = db.Column(db.String())
     month = db.Column(db.String())
     time = db.Column(db.String())
     main_category = db.Column(db.String())
 
-    def __init__(self, url, result_all, result_no_stop_words):
+    def __init__(self, title, ads, name, phone, phone_number, price, description, sub_category, novo_usado, city, suburb, zipcode, image_urls, adcode, main_image_urls, day, month, time, main_category):
         self.title = title
         self.ads = ads
         self.name = name
