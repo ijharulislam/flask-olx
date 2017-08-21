@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -56,30 +58,6 @@ def post_data():
 def fetch_data():
 	limit = int(request.args.get('limit', 100))
 	if request.method == "GET":
-		# olx = OLX(
-		# 	phone_number = data["phone_number"], 
-		# 	city = data["city"],
-		# 	title = data["title"],
-		# 	ads = data['ads'],
-		# 	name = data["name"],
-		# 	phone = data["phone"],
-		# 	price = data["price"],
-		# 	description = data['description'],
-		# 	sub_category = data["sub_category"],
-		# 	novo_usado = data["novo_usado"],
-		# 	suburb = data["suburb"],
-		# 	zipcode = data["zipcode"],
-		# 	image_urls = data["image_urls"],
-		# 	adcode = data["adcode"],
-		# 	main_image_urls = data["main_image_urls"],
-		# 	day = data["day"],
-		# 	month = data["month"],
-		# 	time = data["time"],
-		# 	main_category = data["main_category"]
-		# 	)
-		olx = OLX(**data)
-		db.session.add(olx)
-		db.session.commit()
 		olxs = OLX.query.limit(limit).all()
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
