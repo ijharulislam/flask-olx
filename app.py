@@ -8,7 +8,8 @@ import json
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+
+db = SQLAlchemy()
 POSTGRES = {
     'user': 'olx',
     'pw': 'plx-spider',
@@ -18,6 +19,7 @@ POSTGRES = {
 }
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
+db.init_app(app)
 
 from models import OLX
 
