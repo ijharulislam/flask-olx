@@ -78,7 +78,7 @@ def fetch_data():
 		if phone and adcode:
 			olxs = OLX.query.filter_by(phone_number=phone).filter_by(adcode=adcode).all()
 		elif phone:
-			olxs = OLX.query.filter_by(phone_number == phone).all()
+			olxs = OLX.query.filter_by(phone_number=phone).all()
 		elif adcode:
 			olxs = OLX.query.filter_by(adcode=adcode).all()
 
