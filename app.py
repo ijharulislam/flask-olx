@@ -76,11 +76,11 @@ def fetch_data():
 	if request.method == "GET":
 		olxs = []
 		if phone or adcode:
-			olxs = OLX.query.filter_by(phone_number=phone).all()|OLX.query.filter_by(adcode=adcode).all()
+			olxs = OLX.query.filter_by(phone_number=phone|adcode=adcode).all()		
 		if city and suburbs:
 			olxs = OLX.query.filter_by(city=city, suburb=suburb).all()
 		elif city or suburbs:
-			olxs = OLX.query.filter_by(city=city).all()
+			olxs = OLX.query.filter_by(city=city|suburb=suburb).all()
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
     app.run()
