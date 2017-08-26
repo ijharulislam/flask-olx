@@ -70,20 +70,20 @@ def fetch_data():
 	limit = int(request.args.get('limit', 100))
 	phone = request.args.get('phone', "")
 	adcode = request.args.get('adcode', "")
-	suburbs = request.args.get('suburbs', "")
+	suburb = request.args.get('suburb', "")
 	city = request.args.get('city', "")
 
 	if request.method == "GET":
 		olxs = []
 		if phone and adcode:
-			olxs = OLX.query.filter(phone_number=phone, adcode=adcode).all()
+			olxs = OLX.query.filter_by(phone_number=phone).filter_by(adcode=adcode).all()
 		else:
 			olxs = OLX.query.filter((OLX.phone_number == phone) | (OLX.adcode == adcode)).all()
 
 		if city and suburbs:
-			olxs = OLX.query.filter(city=city, suburb=suburbs).all()
+			olxs = OLX.query.filter_by(city=city).filter_by(suburb=suburb).all()
 		elif city or suburbs:
-			olxs = OLX.query.filter((OLX.city == city) | (OLX.suburb == suburbs)).all()
+			olxs = OLX.query.filter((OLX.city == city) | (OLX.suburb == suburb)).all()
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
     app.run()
