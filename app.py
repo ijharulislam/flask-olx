@@ -80,6 +80,8 @@ def fetch_data():
 	adcode = request.args.get('adcode', None)
 	suburb = request.args.get('suburb', None)
 	city = request.args.get('city', None)
+	query_param = request.args.get('query_param', None)
+
 
 	if request.method == "GET":
 		olxs = []
@@ -96,6 +98,11 @@ def fetch_data():
 			olxs = OLX.query.filter_by(city=city).all()
 		elif suburb:
 			olxs = OLX.query.filter_by(suburb=suburb).all()
+
+		if query_param:
+			field = query_param.split("__")[0]
+			param = query_param.split("__")[1]
+			olxs = OLX.query.filter_by(field=param).all()
 
 		return json.dumps(OLX.serialize_list(olxs))
 
