@@ -5,6 +5,14 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 import json
 
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
+    
+import csv
+from flask import make_response
+
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -90,5 +98,39 @@ def fetch_data():
 			olxs = OLX.query.filter_by(suburb=suburb).all()
 
 		return json.dumps(OLX.serialize_list(olxs))
+
+
+
+@app.route('/download')
+def csv_download(self):
+	phone = request.args.get('phone', None)
+	adcode = request.args.get('adcode', None)
+	suburb = request.args.get('suburb', None)
+	city = request.args.get('city', None)
+	if request.method == "GET":
+		olxs = []
+		if phone and adcode:
+			olxs = OLX.query.filter_by(phone_number=phone).filter_by(adcode=adcode).all()
+		elif phone:
+			olxs = OLX.query.filter_by(phone_number=phone).all()
+		elif adcode:
+			olxs = OLX.query.filter_by(adcode=adcode).all()
+
+		if city and suburb:
+			olxs = OLX.query.filter_by(city=city).filter_by(suburb=suburb).all()
+		elif city:
+			olxs = OLX.query.filter_by(city=city).all()
+		elif suburb:
+			olxs = OLX.query.filter_by(suburb=suburb).all()
+		data = OLX.serialize_list(olxs)
+		si = StringIO.StringIO()
+		cw = csv.writer(si)
+		cw.writerows(data)
+		output = make_response(si.getvalue())
+		output.headers["Content-Disposition"] = "attachment; filename=olx.csv"
+		output.headers["Content-type"] = "text/csv"
+		return output
+
+
 if __name__ == '__main__':
     app.run()
