@@ -123,7 +123,7 @@ def csv_download():
 		elif suburb:
 			olxs = OLX.query.filter_by(suburb=suburb).all()
 		data = OLX.serialize_list(olxs)
-		si = StringIO.StringIO()
+		si = StringIO()
 		cw = csv.writer(si)
 		cw.writerows(data)
 		output = make_response(si.getvalue())
