@@ -21,7 +21,6 @@ POSTGRES = {
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 db.init_app(app)
-
 from models import OLX
 
 data = {
@@ -60,6 +59,7 @@ def post_data():
 		if not request.json:
 			abort(400)
 		json_dict = request.get_json()
+		print(json_dict)
 		olx = OLX(**json_dict)
 		db.session.add(olx)
 		db.session.commit()
@@ -76,11 +76,11 @@ def fetch_data():
 	if request.method == "GET":
 		olxs = []
 		if phone or adcode:
-			olxs = OLX.query.filter_by(phone_number=phone|adcode=adcode).all()		
+			olxs = OLX.query.filter((OLX.phone_number == phone) | (OLX.adcode == adcode)).all()
 		if city and suburbs:
-			olxs = OLX.query.filter_by(city=city, suburb=suburb).all()
+			olxs = OLX.query.filter(city=city, suburb=suburbs).all()
 		elif city or suburbs:
-			olxs = OLX.query.filter_by(city=city|suburb=suburb).all()
+			olxs = OLX.query.filter((OLX.city == city) | (OLX.suburb == suburbs)).all()
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
     app.run()
