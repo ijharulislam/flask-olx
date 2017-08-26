@@ -9,7 +9,7 @@ try:
     from StringIO import StringIO
 except ImportError:
     from io import StringIO
-    
+
 import csv
 from flask import make_response
 
@@ -101,8 +101,8 @@ def fetch_data():
 
 
 
-@app.route('/download')
-def csv_download(self):
+@app.route('/download', methods=['GET'])
+def csv_download():
 	phone = request.args.get('phone', None)
 	adcode = request.args.get('adcode', None)
 	suburb = request.args.get('suburb', None)
