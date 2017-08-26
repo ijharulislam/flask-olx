@@ -60,7 +60,6 @@ def post_data():
 		if not request.json:
 			abort(400)
 		json_dict = request.get_json()
-		print(json_dict)
 		olx = OLX(**json_dict)
 		db.session.add(olx)
 		db.session.commit()
@@ -81,7 +80,7 @@ def fetch_data():
 		if city and suburbs:
 			olxs = OLX.query.filter_by(city=city, suburb=suburb).all()
 		elif city or suburbs:
-			olxs = OLX.query.filter_by(city=city).all()|OLX.query.filter_by(suburb=suburbs).all()
+			olxs = OLX.query.filter_by(city=city).all()
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
     app.run()
