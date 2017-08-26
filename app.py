@@ -68,17 +68,17 @@ def post_data():
 @app.route('/fetch_data/', methods=['GET', 'POST'])
 def fetch_data():
 	limit = int(request.args.get('limit', 100))
-	phone = request.args.get('phone', "NA")
-	adcode = request.args.get('adcode', "NA")
-	suburb = request.args.get('suburb', "NA")
-	city = request.args.get('city', "NA")
+	phone = request.args.get('phone', None)
+	adcode = request.args.get('adcode', None)
+	suburb = request.args.get('suburb', None)
+	city = request.args.get('city', None)
 
 	if request.method == "GET":
 		olxs = []
 		if phone and adcode:
 			olxs = OLX.query.filter_by(phone_number=phone).filter_by(adcode=adcode).all()
 		else:
-			olxs = OLX.query.filter((OLX.phone_number == phone) | (OLX.adcode == adcode)).all()
+			olxs = OLX.query.filter((OLX.phone_number == phone) | (OLX.adcode == adcode)).filter(OLX.phone_number != None).all()
 
 		if city and suburb:
 			olxs = OLX.query.filter_by(city=city).filter_by(suburb=suburb).all()
