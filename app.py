@@ -80,9 +80,9 @@ def fetch_data():
 		else:
 			olxs = OLX.query.filter((OLX.phone_number == phone) | (OLX.adcode == adcode)).all()
 
-		if city and suburbs:
+		if city and suburb:
 			olxs = OLX.query.filter_by(city=city).filter_by(suburb=suburb).all()
-		elif city or suburbs:
+		elif city or suburb:
 			olxs = OLX.query.filter((OLX.city == city) | (OLX.suburb == suburb)).all()
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
