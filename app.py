@@ -77,13 +77,18 @@ def fetch_data():
 		olxs = []
 		if phone and adcode:
 			olxs = OLX.query.filter_by(phone_number=phone).filter_by(adcode=adcode).all()
-		else:
-			olxs = OLX.query.filter((OLX.phone_number == phone) | (OLX.adcode == adcode)).filter(OLX.phone_number != None).all()
+		elif phone:
+			olxs = OLX.query.filter_by(phone_number == phone).all()
+		elif adcode:
+			olxs = OLX.query.filter_by(adcode=adcode).all()
 
 		if city and suburb:
 			olxs = OLX.query.filter_by(city=city).filter_by(suburb=suburb).all()
-		elif city or suburb:
-			olxs = OLX.query.filter((OLX.city == city) | (OLX.suburb == suburb)).all()
+		elif city:
+			olxs = OLX.query.filter_by(city=city).all()
+		elif suburb:
+			olxs = OLX.query.filter_by(suburb=suburb).all()
+
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
     app.run()
