@@ -124,8 +124,9 @@ def csv_download():
 			olxs = OLX.query.filter_by(suburb=suburb).all()
 		data = OLX.serialize_list(olxs)
 		si = StringIO()
-		cw = csv.writer(si)
-		cw.writerows(data)
+		dict_writer = csv.DictWriter(si, data[0].keys())
+		dict_writer.writeheader()
+		dict_writer.writerows(data)
 		output = make_response(si.getvalue())
 		output.headers["Content-Disposition"] = "attachment; filename=olx.csv"
 		output.headers["Content-type"] = "text/csv"
