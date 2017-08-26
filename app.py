@@ -101,7 +101,7 @@ def fetch_data():
 
 
 
-@app.route('/download', methods=['GET'])
+@app.route('/download/', methods=['GET'])
 def csv_download():
 	phone = request.args.get('phone', None)
 	adcode = request.args.get('adcode', None)
