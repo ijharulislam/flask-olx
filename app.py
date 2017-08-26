@@ -3,7 +3,8 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 import os
-import json 
+import json
+
 
 app = Flask(__name__)
 app.config.from_object(os.environ['APP_SETTINGS'])
@@ -20,11 +21,6 @@ POSTGRES = {
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 db.init_app(app)
-
-from models import OLX
-
-"""the other usecase of the other developer is that he will choose, in our own system, the existing city and suburbs that comes from your api . Then after choosed the suburbs he wants he clicks in Submit and then he gets from the choosed suburbs the following fields of their itens:phone, username, ad title, ad posting date and main categ. Need to know what is the best format to receive these data to our system
-and in my case i need to have a page where i can select city/suburbs and the fields i want and download it as csv"""
 
 data = {
 	"phone_number":"(68) 99974 8004",
@@ -53,11 +49,12 @@ data = {
 
 @app.route('/')
 def hello():
-    return "Hello World!"
+    return "OLX APP"
 
 
 @app.route('/post_data', methods=['GET', 'POST'])
 def post_data():
+	from models import OLX
 	if request.method == "POST":
 		if not request.json:
 			abort(400)
@@ -70,20 +67,21 @@ def post_data():
 
 @app.route('/fetch_data/', methods=['GET', 'POST'])
 def fetch_data():
+	from models import OLX
 	limit = int(request.args.get('limit', 100))
 	phone = request.args.get('phone', None)
-	adcode = int(request.args.get('adcode', None))
-	suburbs = int(request.args.get('suburbs', None))
-	city = int(request.args.get('city', None))
+	adcode = request.args.get('adcode', None)
+	suburbs = request.args.get('suburbs', None)
+	city = request.args.get('city', None)
 
 	if request.method == "GET":
 		olxs = []
 		if phone or adcode:
-			olxs = OLX.query.limit(limit).filter(OLX.phone_number=phone).all()|OLX.query.limit(limit).filter(OLX.adcode=adcode).all()
+			olxs = OLX.query.filter_by(phone_number=phone).all()|OLX.query.filter_by(adcode=adcode).all()
 		if city and suburbs:
-			olxs = OLX.query.limit(limit).filter(OLX.city=city, OLX.suburb=suburb).all()
+			olxs = OLX.query.filter_by(city=city, suburb=suburb).all()
 		elif city or suburbs:
-			olxs = OLX.query.limit(limit).filter(OLX.city=city).all()|OLX.query.limit(limit).filter(OLX.suburb=suburb).all()
+			olxs = OLX.query.filter_by(city=city).all()|OLX.query.filter_by(suburb=suburb).all()
 		return json.dumps(OLX.serialize_list(olxs))
 if __name__ == '__main__':
     app.run()
