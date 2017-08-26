@@ -22,6 +22,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://%(user)s:\
 %(pw)s@%(host)s:%(port)s/%(db)s' % POSTGRES
 db.init_app(app)
 
+from models import OLX
+
 data = {
 	"phone_number":"(68) 99974 8004",
 	"city":"Rio Branco",
@@ -54,7 +56,6 @@ def hello():
 
 @app.route('/post_data', methods=['GET', 'POST'])
 def post_data():
-	from models import OLX
 	if request.method == "POST":
 		if not request.json:
 			abort(400)
@@ -67,7 +68,6 @@ def post_data():
 
 @app.route('/fetch_data/', methods=['GET', 'POST'])
 def fetch_data():
-	from models import OLX
 	limit = int(request.args.get('limit', 100))
 	phone = request.args.get('phone', None)
 	adcode = request.args.get('adcode', None)
