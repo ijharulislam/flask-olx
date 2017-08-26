@@ -68,10 +68,10 @@ def post_data():
 @app.route('/fetch_data/', methods=['GET', 'POST'])
 def fetch_data():
 	limit = int(request.args.get('limit', 100))
-	phone = request.args.get('phone', "")
-	adcode = request.args.get('adcode', "")
-	suburb = request.args.get('suburb', "")
-	city = request.args.get('city', "")
+	phone = request.args.get('phone', "NA")
+	adcode = request.args.get('adcode', "NA")
+	suburb = request.args.get('suburb', "NA")
+	city = request.args.get('city', "NA")
 
 	if request.method == "GET":
 		olxs = []
