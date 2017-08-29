@@ -61,7 +61,7 @@ def hello():
     return "OLX APP"
 
 
-@app.route('/post_data', methods=['GET', 'POST'])
+@app.route('/post_data/', methods=['GET', 'POST'])
 def post_data():
 	if request.method == "POST":
 		if not request.json:
