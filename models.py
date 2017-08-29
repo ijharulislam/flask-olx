@@ -37,26 +37,26 @@ class OLX(db.Model, Serializer):
     time = db.Column(db.String(), nullable=True)
     main_category = db.Column(db.String(), nullable=True)
 
-    def __init__(self, title, ads, name, phone, phone_number, price, description, sub_category, novo_usado, city, suburb, zipcode, image_urls, adcode, main_image_urls, day, month, time, main_category):
-        self.title = title
-        self.ads = ads
-        self.name = name
-        self.phone = phone
-        self.phone_number = phone_number
-        self.price = price
-        self.description = description
-        self.sub_category = sub_category
-        self.novo_usado = novo_usado
-        self.city = city
-        self.suburb = suburb
-        self.zipcode = zipcode
-        self.image_urls = image_urls
-        self.adcode = adcode
-        self.main_image_urls = main_image_urls
-        self.day = day
-        self.month = month
-        self.time = time
-        self.main_category = main_category
+    # def __init__(self, title, ads, name, phone, phone_number, price, description, sub_category, novo_usado, city, suburb, zipcode, image_urls, adcode, main_image_urls, day, month, time, main_category):
+    #     self.title = title
+    #     self.ads = ads
+    #     self.name = name
+    #     self.phone = phone
+    #     self.phone_number = phone_number
+    #     self.price = price
+    #     self.description = description
+    #     self.sub_category = sub_category
+    #     self.novo_usado = novo_usado
+    #     self.city = city
+    #     self.suburb = suburb
+    #     self.zipcode = zipcode
+    #     self.image_urls = image_urls
+    #     self.adcode = adcode
+    #     self.main_image_urls = main_image_urls
+    #     self.day = day
+    #     self.month = month
+    #     self.time = time
+    #     self.main_category = main_category
 
     def __repr__(self):
         return '<id {}>'.format(self.id)
