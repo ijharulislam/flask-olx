@@ -20,6 +20,11 @@ class OLX(db.Model, Serializer):
     title = db.Column(db.String(), nullable=True)
     ads = db.Column(db.String(), nullable=True)
     name = db.Column(db.String(), nullable=True)
+    surname = db.Column(db.String(), nullable=True)
+    timestamp = db.Column(db.String(), nullable=True)
+    status = db.Column(db.String(), nullable=True)
+    comment = db.Column(db.String(), nullable=True)
+
     phone = db.Column(db.String(), nullable=True)
     phone_number = db.Column(db.String(), nullable=True)
     price = db.Column(db.String(), nullable=True)
