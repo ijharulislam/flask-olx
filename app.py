@@ -2,6 +2,7 @@
 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask import render_template
 import os
 import json
 
@@ -139,6 +140,47 @@ def csv_download():
 		output.headers["Content-type"] = "text/csv"
 		return output
 
+
+@app.route('/download_page/', methods=['GET'])
+def download_page():
+	if request.method == "GET":
+		return render_template("download_page.html")
+
+
+@app.route("/city_list/",  methods=['GET'])
+def city_list():
+	if request.method == "GET":
+		query = request.args.get('query', None)
+		if query:
+			olxs = OLX.query.filter(OLX.city.startswith(query)).all()
+			data = OLX.serialize_list(olxs)
+			city_list = []
+			for c in data:
+				if c["city"] not in city_list:
+					city_list.append(c["city"])
+			return json.dumps(city_list)
+		else:
+			cities = OLX.query(OLX.city.distinct().label("city"))
+			city_list = [row.city for row in cities.all()]
+			return json.dumps(city_list)
+
+
+@app.route("/suburb_list/",  methods=['GET'])
+def city_list():
+	if request.method == "GET":
+		query = request.args.get('query', None)
+		if query:
+			olxs = OLX.query.filter(OLX.suburb.startswith(query)).all()
+			data = OLX.serialize_list(olxs)
+			suburbs = []
+			for c in data:
+				if c["suburb"] not in city_list:
+					suburbs.append(c["suburb"])
+			return json.dumps(city_list)
+		else:
+			suburbs = OLX.query(OLX.suburb.distinct().label("suburb"))
+			suburb_list = [row.suburb for row in suburbs.all()]
+			return json.dumps(suburb_list)
 
 if __name__ == '__main__':
     app.run()
