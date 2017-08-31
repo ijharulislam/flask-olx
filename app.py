@@ -166,7 +166,7 @@ def city_list():
 
 
 @app.route("/suburb_list/",  methods=['GET'])
-def city_list():
+def suburb_list():
 	if request.method == "GET":
 		query = request.args.get('query', None)
 		if query:
