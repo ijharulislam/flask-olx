@@ -160,7 +160,7 @@ def city_list():
 					city_list.append(c["city"])
 			return json.dumps(city_list)
 		else:
-			cities = db.query(OLX.city.distinct().label("city"))
+			cities = db.session.query(OLX.city.distinct().label("city"))
 			city_list = [row.city for row in cities.all()]
 			return json.dumps(city_list)
 
@@ -178,7 +178,7 @@ def suburb_list():
 					suburbs.append(c["suburb"])
 			return json.dumps(city_list)
 		else:
-			suburbs = db.query(OLX.suburb.distinct().label("suburb"))
+			suburbs = db.session.query(OLX.suburb.distinct().label("suburb"))
 			suburb_list = [row.suburb for row in suburbs.all()]
 			return json.dumps(suburb_list)
 
