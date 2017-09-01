@@ -157,12 +157,12 @@ def csv_download():
 					results.append(obj)
 		else:
 			dat = [row for row in olxs.all()]
-				for d in dat:
-					print("Data", d)
-					obj = {}
-					for f in fields:
-						 obj[f] =  d[f]
-					results.append(obj)
+			for d in dat:
+				print("Data", d)
+				obj = {}
+				for f in fields:
+					 obj[f] =  d[f]
+				results.append(obj)
 		data = results
 		if data:
 			si = StringIO()
