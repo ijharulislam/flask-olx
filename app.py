@@ -127,6 +127,7 @@ def csv_download():
 			print("Main Query", olxs)
 			olxs = olxs.distinct()
 			dat = [row for row in olxs.all()]
+			dat = OLX.serialize_list(dat)
 			print("DAT", dat)
 			for d in dat:
 				print("Data", d)
