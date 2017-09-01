@@ -41,7 +41,7 @@
       <div class="row">
         <div class="col-md-6 text-center">
              <select name="groupid" id="category" multiple="multiple">
-              <option value="0" selected>Please select Category</option>
+              <option value="0">Please select Category</option>
             </select>
         </div>
         <div class="col-md-6 text-center">
@@ -116,7 +116,7 @@
               $('<option>').val(data[i]).text(data[i]).appendTo('#category');
             }
 
-            $('#city').multiselect({
+            $('#category').multiselect({
               onChange: function(element, checked) {
                   var brands = $('#category option:selected');
                   $(brands).each(function(index, brand){
@@ -136,7 +136,7 @@
             $('<option>').val(suburb[k]).text(suburb[k]).appendTo('#sucategory');
           }
 
-          $('#suburb').multiselect({
+          $('#sucategory').multiselect({
             onChange: function(element, checked) {
                 var brands = $('#sucategory option:selected');
                 $(brands).each(function(index, brand){
