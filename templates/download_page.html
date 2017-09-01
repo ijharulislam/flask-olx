@@ -50,6 +50,14 @@
             </select>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6 text-center">
+             <select name="groupid" id="field" multiple="multiple">
+              <option value="0">Please select Fields</option>
+            </select>
+        </div>
+      </div>
     </div>
 
     <script
@@ -71,6 +79,35 @@
       var selected_suburb = [];
       var selected_categ = [];
       var selected_subcateg = [];
+      var selected_fields = [];
+
+      var field_list = [
+        "id",
+        "title",
+        "ads",
+        "name",
+        "surname",
+        "timestamp",
+        "status",
+        "comment",
+        "phone",
+        "phone_number",
+        "price",
+        "description",
+        "sub_category",
+        "novo_usado",
+        "city",
+        "suburb",
+        "zipcode",
+        "adcode",
+        "image_urls",
+        "main_image_urls",
+        "day",
+        "month",
+        "time",
+        "main_category"
+      ]
+
 
 	    $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/city_list/", function( data ) {
 				  data = JSON.parse(data)
@@ -147,6 +184,19 @@
 
         });
       }
+
+      for (var f=0; f<field_list.length; f++){
+        $('<option>').val(field_list[f]).text(field_list[f]).appendTo('#field');
+      }
+
+      $('#field').multiselect({
+        onChange: function(element, checked) {
+          var brands = $('#field option:selected');
+          $(brands).each(function(index, brand){
+              selected_fields.push($(this).val());
+          });
+        }
+      });
 
     </script>
 
