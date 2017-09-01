@@ -124,6 +124,7 @@ def csv_download():
 	if request.method == "GET":
 		if city and categ:
 			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city)).filter(OLX.main_category.startswith(categ))
+			print("Main Query", olxs)
 		elif city:
 			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city))
 		elif categ:
@@ -132,8 +133,10 @@ def csv_download():
 		if suburb and subcateg:
 			for c in suburb:
 				olxs = olxs.filter(OLX.suburb.startswith(c))
+				print("OLXs SUBURB", olxs)
 				for sub in subcateg:
 					olxs = olxs.filter(OLX.sub_category.startswith(sub))
+					print("OLXs SUB", olxs)
 					dat = [row for row in olxs.all()]
 					for d in dat:
 						print("Data", d)
