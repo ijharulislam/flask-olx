@@ -117,41 +117,42 @@ def csv_download():
 	suburb = json.loads(request.args.get('suburb', []))
 	city = json.loads(request.args.get('city', []))
 	fields = json.loads(request.args.get('fields', []))
+	print(fields)
 
 	results = []
 	olxs = []
 	if request.method == "GET":
 		olxs = db.session.query(OLX.adcode.distinct().label("adcode"))
-
-		for cat in categ:
-			olxs = olxs.filter(OLX.main_category.ilike(cat))
-			
-			for sub in subcateg:
-				olxs = olxs.filter(OLX.sub_category.ilike(sub))
-			
-				for c in city:
-					olxs = olxs.filter(OLX.city.ilike(c))
+		for c in city:
+			olxs = olxs.filter(OLX.city.ilike(c)).filter(OLX.main_category.ilike(categ)).filter(OLX.sub_category.ilike(subcateg)).filter(OLX.suburb.ilike(suburb))
+			dat = [row for row in olxs.all()]
+				for d in dat:
+					print("Data", d)
+					obj = {}
+					for f in fields:
+						 obj[f] =  d[f]
+					results.append(obj)		
+		# for subu in suburb:
+		# 	olxs = olxs.filter(OLX.suburb.ilike(subu))
 				
-					for subu in suburb:
-						olxs = olxs.filter(OLX.suburb.ilike(subu))
-						dat = [row for row in olxs.all()]
-						for d in dat:
-							print("Data", d)
-							obj = {}
-							for f in fields:
-								 obj[f] =  d[f]
-							results.append(obj)
 
+		# for cat in categ:
+		# 	olxs = olxs.filter(OLX.main_category.ilike(cat))
+			
+		# 	for sub in subcateg:
+		# 		olxs = olxs.filter(OLX.sub_category.ilike(sub))
 		# data = OLX.serialize_list(olxs)
 		data = results
-		si = StringIO()
-		dict_writer = csv.DictWriter(si, data[0].keys())
-		dict_writer.writeheader()
-		dict_writer.writerows(data)
-		output = make_response(si.getvalue())
-		output.headers["Content-Disposition"] = "attachment; filename=olx.csv"
-		output.headers["Content-type"] = "text/csv"
-		return output
+		if data:
+			si = StringIO()
+			dict_writer = csv.DictWriter(si, data[0].keys())
+			dict_writer.writeheader()
+			dict_writer.writerows(data)
+			output = make_response(si.getvalue())
+			output.headers["Content-Disposition"] = "attachment; filename=olx.csv"
+			output.headers["Content-type"] = "text/csv"
+			return output
+		return jsonify({'success': True}), 200
 
 
 @app.route('/download_page/', methods=['GET'])

@@ -208,9 +208,9 @@
         $.get(
           "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/",
           {
-            categ: JSON.stringify(selected_categ),
-            subcateg: JSON.stringify(selected_subcateg),
-            suburb: JSON.stringify(selected_suburb),
+            categ: JSON.stringify(selected_categ[0]),
+            subcateg: JSON.stringify(selected_subcateg[0]),
+            suburb: JSON.stringify(selected_suburb[0]),
             city: JSON.stringify(selected_city),
             fields: JSON.stringify(selected_fields),
           }, function(data){
