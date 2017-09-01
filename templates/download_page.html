@@ -62,18 +62,21 @@
 				  for (var i=0; i<data.length; i++){
 				  	$('<option>').val(data[i]).text(data[i]).appendTo('#city');
 				  }
+
+          $('#city').multiselect({
+            onChange: function(element, checked) {
+                var brands = $('#city option:selected');
+                var selected = [];
+                $(brands).each(function(index, brand){
+                    selected.push([$(this).val()]);
+                });
+                console.log(selected);
+            }
+          });
+
 		  });
 
-      $('#city').multiselect({
-        onChange: function(element, checked) {
-            var brands = $('#city option:selected');
-            var selected = [];
-            $(brands).each(function(index, brand){
-                selected.push([$(this).val()]);
-            });
-            console.log(selected);
-        }
-      });
+      
 
     </script>
   </body>
