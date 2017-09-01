@@ -150,19 +150,9 @@ def download_page():
 @app.route("/city_list/",  methods=['GET'])
 def city_list():
 	if request.method == "GET":
-		query = request.args.get('query', None)
-		if query:
-			olxs = OLX.query.filter(OLX.city.startswith(query)).all()
-			data = OLX.serialize_list(olxs)
-			city_list = []
-			for c in data:
-				if c["city"] not in city_list:
-					city_list.append(c["city"])
-			return json.dumps(city_list)
-		else:
-			cities = db.session.query(OLX.city.distinct().label("city"))
-			city_list = [row.city for row in cities.all() if row.city != None]
-			return json.dumps(city_list)
+		cities = db.session.query(OLX.city.distinct().label("city"))
+		city_list = [row.city for row in cities.all() if row.city != None]
+		return json.dumps(city_list)
 
 
 @app.route("/suburb_list/",  methods=['GET'])
@@ -170,17 +160,36 @@ def suburb_list():
 	if request.method == "GET":
 		query = request.args.get('query', [])
 		query = json.loads(query)
-		print(query)
 		suburbs = []
 		for q in query:
 			suburb = db.session.query(OLX.suburb.distinct().label("suburb")).filter(OLX.city.startswith(q)).all()
-			print("suburb", suburb[0].suburb)
 			suburb_list = [row.suburb for row in suburb]
-			print("Suburb List", suburb_list)
 			suburbs.append(suburb_list)
-		print("suburbs", suburbs)
 		suburbs = sum(suburbs, [])
 		return json.dumps(suburbs)
+
+
+@app.route("/categ_list/",  methods=['GET'])
+def categ_list():
+	if request.method == "GET":
+		main_category = db.session.query(OLX.main_category.distinct().label("main_category"))
+		category_list = [row.main_category for row in main_category.all()]
+		return json.dumps(category_list)
+
+
+@app.route("/subcateg_list/",  methods=['GET'])
+def subcateg_list():
+	if request.method == "GET":
+		query = request.args.get('query', [])
+		query = json.loads(query)
+		sub_categories = []
+		for q in query:
+			sub_category = db.session.query(OLX.sub_category.distinct().label("sub_category")).filter(OLX.main_category.startswith(q)).all()
+			sub_category_list = [row.sub_category for row in sub_category]
+			sub_categories.append(sub_category_list)
+		sub_categories = sum(sub_categories, [])
+		return json.dumps(sub_categories)
+
 
 if __name__ == '__main__':
     app.run()
