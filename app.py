@@ -117,17 +117,23 @@ def csv_download():
 	suburb = json.loads(request.args.get('suburb', ""))
 	city = json.loads(request.args.get('city', ""))
 	fields = json.loads(request.args.get('fields', ""))
-	print(categ, subcateg, suburb, city, fields)
+	print(categ, subcateg, suburb, city, fields, len(subcateg))
 
 	results = []
 	olxs = []
 	if request.method == "GET":
-		olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city)).filter(OLX.main_category.startswith(categ))
+		if city and categ:
+			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city)).filter(OLX.main_category.startswith(categ))
+		elif city:
+			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city))
+		elif categ:
+			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.main_category.startswith(categ))
+
 		if suburb and subcateg:
 			for c in suburb:
-				olxs = olxs.filter(OLX.suburb.startswith(suburb))
+				olxs = olxs.filter(OLX.suburb.startswith(c))
 				for sub in subcateg:
-					olxs = olxs.filter(OLX.sub_category.startswith(subcateg))
+					olxs = olxs.filter(OLX.sub_category.startswith(sub))
 					dat = [row for row in olxs.all()]
 					for d in dat:
 						print("Data", d)
@@ -137,7 +143,7 @@ def csv_download():
 						results.append(obj)
 		elif suburb:
 			for c in suburb:
-				olxs = olxs.filter(OLX.suburb.startswith(suburb))
+				olxs = olxs.filter(OLX.suburb.startswith(c))
 				dat = [row for row in olxs.all()]
 				for d in dat:
 					print("Data", d)
@@ -147,7 +153,7 @@ def csv_download():
 					results.append(obj)
 		elif subcateg:
 			for sub in subcateg:
-				olxs = olxs.filter(OLX.sub_category.startswith(subcateg))
+				olxs = olxs.filter(OLX.sub_category.startswith(sub))
 				dat = [row for row in olxs.all()]
 				for d in dat:
 					print("Data", d)
