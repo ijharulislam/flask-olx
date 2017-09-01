@@ -73,6 +73,7 @@
 		        jQuery.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/city_list/", {
 		        }, function (data) {
 		        	console.log("Data", data)
+		        	data = JSON.parse(data)
 		            response(data);
 		        });
 		    },
