@@ -168,19 +168,14 @@ def city_list():
 @app.route("/suburb_list/",  methods=['GET'])
 def suburb_list():
 	if request.method == "GET":
-		query = request.args.get('query', None)
-		if query:
-			olxs = OLX.query.filter(OLX.suburb.startswith(query)).all()
-			data = OLX.serialize_list(olxs)
-			suburbs = []
-			for c in data:
-				if c["suburb"] not in city_list:
-					suburbs.append(c["suburb"])
-			return json.dumps(city_list)
-		else:
-			suburbs = db.session.query(OLX.suburb.distinct().label("suburb"))
-			suburb_list = [row.suburb for row in suburbs.all() if row.suburb != "null"]
-			return json.dumps(suburb_list)
+		query = request.args.get('query', [])
+		query = json.loads(query)
+		print(query)
+		suburbs = []
+		for q in query:
+			suburb = db.session.query(OLX.suburb.distinct().label("suburb")).filter(OLX.city.startswith(q)).all()
+			suburbs + [row.suburb for row in suburb]
+		return json.dumps(suburbs)
 
 if __name__ == '__main__':
     app.run()
