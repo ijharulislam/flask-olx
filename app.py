@@ -179,6 +179,7 @@ def suburb_list():
 			print("Suburb List", suburb_list)
 			suburbs.append(suburb_list)
 		print("suburbs", suburbs)
+		suburbs = sum(suburbs, [])
 		return json.dumps(suburbs)
 
 if __name__ == '__main__':
