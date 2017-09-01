@@ -112,36 +112,57 @@ def fetch_data():
 
 @app.route('/download/', methods=['GET'])
 def csv_download():
-	categ = json.loads(request.args.get('categ', []))
-	subcateg = json.loads(request.args.get('subcateg', []))
-	suburb = json.loads(request.args.get('suburb', []))
-	city = json.loads(request.args.get('city', []))
-	fields = json.loads(request.args.get('fields', []))
+	categ = json.loads(request.args.get('categ', ""))
+	subcateg = json.loads(request.args.get('subcateg', ""))
+	suburb = json.loads(request.args.get('suburb', ""))
+	city = json.loads(request.args.get('city', ""))
+	fields = json.loads(request.args.get('fields', ""))
 	print(fields)
 
 	results = []
 	olxs = []
 	if request.method == "GET":
-		olxs = db.session.query(OLX.adcode.distinct().label("adcode"))
-		for c in city:
-			olxs = olxs.filter(OLX.city.ilike(c)).filter(OLX.main_category.ilike(categ)).filter(OLX.sub_category.ilike(subcateg)).filter(OLX.suburb.ilike(suburb))
+		olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.ilike(city)).filter(OLX.main_category.ilike(categ))
+		if suburb and subcateg:
+			for c in suburb:
+				olxs = olxs.filter(OLX.suburb.ilike(suburb))
+				for sub in subcateg:
+					olxs = olxs.filter(OLX.sub_category.ilike(subcateg))
+					dat = [row for row in olxs.all()]
+					for d in dat:
+						print("Data", d)
+						obj = {}
+						for f in fields:
+							 obj[f] =  d[f]
+						results.append(obj)
+		elif suburb:
+			for c in suburb:
+				olxs = olxs.filter(OLX.suburb.ilike(suburb))
+				dat = [row for row in olxs.all()]
+				for d in dat:
+					print("Data", d)
+					obj = {}
+					for f in fields:
+						 obj[f] =  d[f]
+					results.append(obj)
+		elif subcateg:
+			for sub in subcateg:
+				olxs = olxs.filter(OLX.sub_category.ilike(subcateg))
+				dat = [row for row in olxs.all()]
+				for d in dat:
+					print("Data", d)
+					obj = {}
+					for f in fields:
+						 obj[f] =  d[f]
+					results.append(obj)
+		else:
 			dat = [row for row in olxs.all()]
-			for d in dat:
-				print("Data", d)
-				obj = {}
-				for f in fields:
-					 obj[f] =  d[f]
-				results.append(obj)		
-		# for subu in suburb:
-		# 	olxs = olxs.filter(OLX.suburb.ilike(subu))
-				
-
-		# for cat in categ:
-		# 	olxs = olxs.filter(OLX.main_category.ilike(cat))
-			
-		# 	for sub in subcateg:
-		# 		olxs = olxs.filter(OLX.sub_category.ilike(sub))
-		# data = OLX.serialize_list(olxs)
+				for d in dat:
+					print("Data", d)
+					obj = {}
+					for f in fields:
+						 obj[f] =  d[f]
+					results.append(obj)
 		data = results
 		if data:
 			si = StringIO()
