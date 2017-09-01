@@ -1,4 +1,4 @@
-# coding=utf-8
+ # -*- coding: utf-8 -*-
 
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
@@ -161,7 +161,7 @@ def city_list():
 			return json.dumps(city_list)
 		else:
 			cities = db.session.query(OLX.city.distinct().label("city"))
-			city_list = [row.city for row in cities.all()]
+			city_list = [row.city for row in cities.all() if row.city != "null"]
 			return json.dumps(city_list)
 
 
@@ -179,7 +179,7 @@ def suburb_list():
 			return json.dumps(city_list)
 		else:
 			suburbs = db.session.query(OLX.suburb.distinct().label("suburb"))
-			suburb_list = [row.suburb for row in suburbs.all()]
+			suburb_list = [row.suburb for row in suburbs.all() if row.suburb != "null"]
 			return json.dumps(suburb_list)
 
 if __name__ == '__main__':
