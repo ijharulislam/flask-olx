@@ -127,7 +127,7 @@ def csv_download():
 			for cit in city:
 				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(categ))
+					olxs = olxs.filter(OLX.main_category.ilike(cat))
 					for c in suburb:
 						olxs = olxs.filter(OLX.suburb.ilike(c))
 						for sub in subcateg:
@@ -146,7 +146,7 @@ def csv_download():
 			for cit in city:
 				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(categ))
+					olxs = olxs.filter(OLX.main_category.ilike(cat))
 					for sub in subcateg:
 						olxs = olxs.filter(OLX.sub_category.ilike(sub))
 						olxs = olxs.distinct()
@@ -163,7 +163,7 @@ def csv_download():
 			for cit in city:
 				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(categ))
+					olxs = olxs.filter(OLX.main_category.ilike(cat))
 					for c in suburb:
 						olxs = olxs.filter(OLX.suburb.ilike(c))
 						olxs = olxs.distinct()
@@ -180,7 +180,7 @@ def csv_download():
 			for cit in city:
 				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(categ))
+					olxs = olxs.filter(OLX.main_category.ilike(cat))
 					olxs = olxs.distinct()
 					dat = [row for row in olxs.all()]
 					dat = OLX.serialize_list(dat)
@@ -205,7 +205,7 @@ def csv_download():
 
 		elif categ:
 			for cat in categ:
-				olxs = db.session.query(OLX).filter(OLX.main_category.ilike(categ))
+				olxs = db.session.query(OLX).filter(OLX.main_category.ilike(cat))
 				olxs = olxs.distinct()
 				dat = [row for row in olxs.all()]
 				dat = OLX.serialize_list(dat)
