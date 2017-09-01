@@ -28,12 +28,10 @@
       <div class="row">
         <div class="col-md-6 text-center">
       	     <select name="groupid" id="city" multiple="multiple">
-      				<option value="0" selected>Please select City</option>
       			</select>
         </div>
         <div class="col-md-6 text-center">
-             <select name="groupid" id="suburb" multiple="multiple">
-              <option value="0">Please select Suburb</option>
+             <select name="groupid" id="suburb" multiple="multiple" style="display: none;">
             </select>
         </div>
       </div>
@@ -41,23 +39,28 @@
       <div class="row">
         <div class="col-md-6 text-center">
              <select name="groupid" id="category" multiple="multiple">
-              <option value="0">Please select Category</option>
             </select>
         </div>
         <div class="col-md-6 text-center">
-             <select name="groupid" id="sucategory" multiple="multiple">
-              <option value="0">Please select Sub Category</option>
-            </select>
+          <select name="groupid" id="sucategory" multiple="multiple" style="display: none;">
+             
+          </select>
         </div>
       </div>
 
       <div class="row">
         <div class="col-md-6 text-center">
              <select name="groupid" id="field" multiple="multiple">
-              <option value="0">Please select Fields</option>
             </select>
         </div>
       </div>
+
+      <div class="row">
+        <div class="col-md-6 text-center">
+         <button class="btn btn-default" id="download">Download CSV</button>
+        </div>
+      </div>
+
     </div>
 
     <script
@@ -129,6 +132,7 @@
       function getSuburb(selected){
         $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/suburb_list/", {query: JSON.stringify(selected)}, function(suburb){
           suburb = JSON.parse(suburb)
+          $("#suburb").show();
 
           for (var j=0; j<suburb.length; j++){
             $('<option>').val(suburb[j]).text(suburb[j]).appendTo('#suburb');
@@ -168,6 +172,7 @@
       function getSubCategory(selected){
         $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/subcateg_list/", {query: JSON.stringify(selected)}, function(suburb){
           suburb = JSON.parse(suburb)
+          $("#sucategory").show();
 
           for (var k=0; k<suburb.length; k++){
             $('<option>').val(suburb[k]).text(suburb[k]).appendTo('#sucategory');
@@ -197,6 +202,22 @@
           });
         }
       });
+
+
+      $("#download").on('click', function(){
+        $.get(
+          "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/",
+          {
+            categ: JSON.stringify(selected_categ),
+            subcateg: JSON.stringify(selected_subcateg),
+            suburb: JSON.stringify(selected_suburb),
+            city: JSON.stringify(selected_city),
+            fields: JSON.stringify(selected_fields),
+          }, function(data){
+            console.log(data)
+        })
+
+      })
 
     </script>
 

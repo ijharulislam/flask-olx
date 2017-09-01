@@ -74,6 +74,7 @@ def post_data():
 		db.session.commit()
 		return jsonify({'success': True}), 201
 
+
 @app.route('/fetch_data/', methods=['GET', 'POST'])
 def fetch_data():
 	limit = int(request.args.get('limit', 100))
@@ -111,26 +112,38 @@ def fetch_data():
 
 @app.route('/download/', methods=['GET'])
 def csv_download():
-	phone = request.args.get('phone', None)
-	adcode = request.args.get('adcode', None)
-	suburb = request.args.get('suburb', None)
-	city = request.args.get('city', None)
-	if request.method == "GET":
-		olxs = []
-		if phone and adcode:
-			olxs = OLX.query.filter_by(phone_number=phone).filter_by(adcode=adcode).all()
-		elif phone:
-			olxs = OLX.query.filter_by(phone_number=phone).all()
-		elif adcode:
-			olxs = OLX.query.filter_by(adcode=adcode).all()
+	categ = json.loads(request.args.get('categ', []))
+	subcateg = json.loads(request.args.get('subcateg', []))
+	suburb = json.loads(request.args.get('suburb', []))
+	city = json.loads(request.args.get('city', []))
+	fields = json.loads(request.args.get('fields', []))
 
-		if city and suburb:
-			olxs = OLX.query.filter_by(city=city).filter_by(suburb=suburb).all()
-		elif city:
-			olxs = OLX.query.filter_by(city=city).all()
-		elif suburb:
-			olxs = OLX.query.filter_by(suburb=suburb).all()
-		data = OLX.serialize_list(olxs)
+	results = []
+	olxs = []
+	if request.method == "GET":
+		olxs = db.session.query(OLX.adcode.distinct().label("adcode"))
+
+		for cat in categ:
+			olxs = olxs.filter(OLX.main_category.ilike(cat))
+			
+			for sub in subcateg:
+				olxs = olxs.filter(OLX.sub_category.ilike(sub))
+			
+				for c in city:
+					olxs = olxs.filter(OLX.city.ilike(c))
+				
+					for subu in suburb:
+						olxs = olxs.filter(OLX.suburb.ilike(subu))
+						dat = [row for row in olxs.all()]
+						for d in dat:
+							print("Data", d)
+							obj = {}
+							for f in fields:
+								 obj[f] =  d[f]
+							results.append(obj)
+
+		# data = OLX.serialize_list(olxs)
+		data = results
 		si = StringIO()
 		dict_writer = csv.DictWriter(si, data[0].keys())
 		dict_writer.writeheader()
