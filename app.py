@@ -124,31 +124,20 @@ def csv_download():
 	if request.method == "GET":
 		if city and categ:
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).filter(OLX.main_category.ilike(categ))
-			print("Main Query", olxs)
-			olxs = olxs.distinct()
-			dat = [row for row in olxs.all()]
-			dat = OLX.serialize_list(dat)
-			print("DAT", dat)
-			for d in dat:
-				print("Data", d)
-				obj = {}
-				for f in fields:
-					 obj[f] =  d[f]
-				results.append(obj)
 		elif city:
-			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city))
+			olxs = db.session.query(OLX).filter(OLX.city.startswith(city))
 		elif categ:
-			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.main_category.startswith(categ))
+			olxs = db.session.query(OLX).filter(OLX.main_category.startswith(categ))
 
 		if suburb and subcateg:
 			for c in suburb:
-				olxs = olxs.filter(OLX.suburb.startswith(c))
+				olxs = olxs.filter(OLX.suburb.ilike(c))
 				print("OLXs SUBURB", olxs)
 				for sub in subcateg:
-					olxs = olxs.filter(OLX.sub_category.startswith(sub))
-					print("OLXs SUB", olxs)
+					olxs = olxs.filter(OLX.sub_category.ilike(sub))
+					olxs = olxs.distinct()
 					dat = [row for row in olxs.all()]
-					print("DAT", dat)
+					dat = OLX.serialize_list(dat)
 					for d in dat:
 						print("Data", d)
 						obj = {}
@@ -157,8 +146,10 @@ def csv_download():
 						results.append(obj)
 		elif suburb:
 			for c in suburb:
-				olxs = olxs.filter(OLX.suburb.startswith(c))
+				olxs = olxs.filter(OLX.suburb.ilike(c))
+				olxs = olxs.distinct()
 				dat = [row for row in olxs.all()]
+				dat = OLX.serialize_list(dat)
 				for d in dat:
 					print("Data", d)
 					obj = {}
@@ -167,22 +158,26 @@ def csv_download():
 					results.append(obj)
 		elif subcateg:
 			for sub in subcateg:
-				olxs = olxs.filter(OLX.sub_category.startswith(sub))
+				olxs = olxs.filter(OLX.sub_category.ilike(sub))
+				olxs = olxs.distinct()
 				dat = [row for row in olxs.all()]
+				dat = OLX.serialize_list(dat)
 				for d in dat:
 					print("Data", d)
 					obj = {}
 					for f in fields:
 						 obj[f] =  d[f]
 					results.append(obj)
-		# else:
-		# 	dat = [row for row in olxs.all()]
-		# 	for d in dat:
-		# 		print("Data", d)
-		# 		obj = {}
-		# 		for f in fields:
-		# 			 obj[f] =  d[f]
-		# 		results.append(obj)
+		else:
+			olxs = olxs.distinct()
+			dat = [row for row in olxs.all()]
+			dat = OLX.serialize_list(dat)
+			for d in dat:
+				print("Data", d)
+				obj = {}
+				for f in fields:
+					 obj[f] =  d[f]
+				results.append(obj)
 		data = results
 		if data:
 			si = StringIO()
