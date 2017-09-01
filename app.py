@@ -123,7 +123,7 @@ def csv_download():
 	olxs = []
 	if request.method == "GET":
 		if city and categ:
-			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city)).filter(OLX.main_category.startswith(categ))
+			olxs = db.session.query(OLX.adcode.distinct()).filter(OLX.city.ilike(city)).filter(OLX.main_category.ilike(categ))
 			print("Main Query", olxs)
 			dat = [row for row in olxs.all()]
 			print("DAT", dat)
