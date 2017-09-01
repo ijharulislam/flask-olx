@@ -173,10 +173,10 @@ def suburb_list():
 		print(query)
 		suburbs = []
 		for q in query:
-			print("Q", q)
-			suburb = db.session.query(OLX.suburb.distinct().label("suburb")).filter(OLX.city.startswith(q)).all()
+			suburb = db.session.query(OLX.suburb.distinct().label("suburb")).filter(OLX.city.startswith(q))
 			print("suburb", suburb[0].suburb)
-			suburbs.append(row.suburb for row in suburb)
+			suburb_list = [row.suburb for row in suburb.all()]
+			suburbs.append(suburb_list)
 		print("suburbs", suburbs)
 		return json.dumps(suburbs)
 
