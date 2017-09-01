@@ -125,6 +125,14 @@ def csv_download():
 		if city and categ:
 			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city)).filter(OLX.main_category.startswith(categ))
 			print("Main Query", olxs)
+			dat = [row for row in olxs.all()]
+			print("DAT", dat)
+			for d in dat:
+				print("Data", d)
+				obj = {}
+				for f in fields:
+					 obj[f] =  d[f]
+				results.append(obj)
 		elif city:
 			olxs = db.session.query(OLX.adcode.distinct().label("adcode")).filter(OLX.city.startswith(city))
 		elif categ:
