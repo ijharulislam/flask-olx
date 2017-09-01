@@ -138,6 +138,7 @@ def csv_download():
 					olxs = olxs.filter(OLX.sub_category.startswith(sub))
 					print("OLXs SUB", olxs)
 					dat = [row for row in olxs.all()]
+					print("DAT", dat)
 					for d in dat:
 						print("Data", d)
 						obj = {}
