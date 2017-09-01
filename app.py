@@ -126,12 +126,12 @@ def csv_download():
 		for c in city:
 			olxs = olxs.filter(OLX.city.ilike(c)).filter(OLX.main_category.ilike(categ)).filter(OLX.sub_category.ilike(subcateg)).filter(OLX.suburb.ilike(suburb))
 			dat = [row for row in olxs.all()]
-				for d in dat:
-					print("Data", d)
-					obj = {}
-					for f in fields:
-						 obj[f] =  d[f]
-					results.append(obj)		
+			for d in dat:
+				print("Data", d)
+				obj = {}
+				for f in fields:
+					 obj[f] =  d[f]
+				results.append(obj)		
 		# for subu in suburb:
 		# 	olxs = olxs.filter(OLX.suburb.ilike(subu))
 				
