@@ -161,7 +161,7 @@ def city_list():
 			return json.dumps(city_list)
 		else:
 			cities = db.session.query(OLX.city.distinct().label("city"))
-			city_list = [row.city for row in cities.all() if row.city != "null"]
+			city_list = [row.city for row in cities.all() if row.city != None]
 			return json.dumps(city_list)
 
 

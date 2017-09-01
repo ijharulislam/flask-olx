@@ -27,6 +27,9 @@
       <div class="row">
         <div class="col-lg-12 text-center">
           <input id="myAutocomplete" type="text" />
+	        <select name="groupid" style="width:100%;" id="city">
+				<option value="0" selected>Please select City</option>
+			</select>
         </div>
       </div>
     </div>
@@ -41,6 +44,14 @@
 
 
     <script type="text/javascript">
+    	$.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/city_list/", function( data ) {
+			  alert( "Load was performed." );
+			  console.log("Data": data)
+			  data = JSON.parse(data)
+			  for(var i=0; i<data.length; i++){
+			  	$('<option>').val(data[i]).text(data[i]).appendTo('#city');
+			  }
+		});
     	
     	$(function(){
 			var availableTags = [
