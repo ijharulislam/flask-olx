@@ -117,7 +117,7 @@ def csv_download():
 	suburb = json.loads(request.args.get('suburb', ""))
 	city = json.loads(request.args.get('city', ""))
 	fields = json.loads(request.args.get('fields', ""))
-	print(fields)
+	print(categ, subcateg, suburb, city, fields)
 
 	results = []
 	olxs = []
