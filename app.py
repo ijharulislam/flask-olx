@@ -266,7 +266,6 @@ def city_list():
 	if request.method == "GET":
 		cities = db.session.query(OLX.city.distinct().label("city"))
 		city_list = [row.city for row in cities.all() if row.city != None]
-		city_list.sort()
 		return json.dumps(city_list)
 
 
@@ -282,7 +281,6 @@ def suburb_list():
 			suburbs.append(suburb_list)
 		suburbs = sum(suburbs, [])
 		suburbs = [i for i in suburbs if i]
-		suburbs.sort()
 		return json.dumps(suburbs)
 
 
@@ -291,7 +289,6 @@ def categ_list():
 	if request.method == "GET":
 		main_category = db.session.query(OLX.main_category.distinct().label("main_category"))
 		category_list = [row.main_category for row in main_category.all()]
-		category_list.sort()
 		return json.dumps(category_list)
 
 
@@ -307,7 +304,6 @@ def subcateg_list():
 			sub_categories.append(sub_category_list)
 		sub_categories = sum(sub_categories, [])
 		sub_categories = [i for i in sub_categories if i]
-		sub_categories.sort()
 		return json.dumps(sub_categories)
 
 
