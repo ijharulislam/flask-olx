@@ -265,7 +265,7 @@ def download_page():
 def city_list():
 	if request.method == "GET":
 		cities = db.session.query(OLX.city.distinct().label("city"))
-		city_list = sorted([row.city for row in cities.all() if row.city != None])
+		city_list = sorted([row.city for row in cities.all() if row.city])
 		return json.dumps(city_list)
 
 
@@ -288,7 +288,7 @@ def suburb_list():
 def categ_list():
 	if request.method == "GET":
 		main_category = db.session.query(OLX.main_category.distinct().label("main_category"))
-		category_list = sorted([row.main_category for row in main_category.all()])
+		category_list = sorted([row.main_category for row in main_category.all() if row.main_category ])
 		return json.dumps(category_list)
 
 
