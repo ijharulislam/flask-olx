@@ -241,7 +241,7 @@ def csv_download():
 					for f in fields:
 						 obj[f] =  d[f]
 					results.append(obj)
-					
+
 		data = results
 		if data:
 			si = StringIO()
@@ -252,7 +252,7 @@ def csv_download():
 			output.headers["Content-Disposition"] = "attachment; filename=olx.csv"
 			output.headers["Content-type"] = "text/csv"
 			return output
-		return jsonify({'success': True}), 200
+		return jsonify({'message': "No Data Found"}), 200
 
 
 @app.route('/download_page/', methods=['GET'])

@@ -27,7 +27,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6 text-center">
-      	     <select name="groupid" id="city">
+      	     <select name="groupid" id="city" multiple="multiple">
       			</select>
         </div>
         <div class="col-md-6 text-center">
@@ -38,7 +38,7 @@
 
       <div class="row">
         <div class="col-md-6 text-center">
-             <select name="groupid" id="category">
+             <select name="groupid" id="category" multiple="multiple">
             </select>
         </div>
         <div class="col-md-6 text-center">
@@ -120,6 +120,7 @@
 
           $('#city').multiselect({
             onChange: function(element, checked) {
+                selected_city = [];
                 var brands = $('#city option:selected');
                 $(brands).each(function(index, brand){
                     selected_city.push($(this).val());
@@ -140,6 +141,7 @@
 
           $('#suburb').multiselect({
             onChange: function(element, checked) {
+                selected_suburb = []
                 var brands = $('#city option:selected');
                 $(brands).each(function(index, brand){
                     selected_suburb.push($(this).val());
@@ -159,6 +161,7 @@
 
             $('#category').multiselect({
               onChange: function(element, checked) {
+                  selected_categ = [];
                   var brands = $('#category option:selected');
                   $(brands).each(function(index, brand){
                       selected_categ.push($(this).val());
@@ -180,6 +183,7 @@
 
           $('#sucategory').multiselect({
             onChange: function(element, checked) {
+                selected_subcateg = [];
                 var brands = $('#sucategory option:selected');
                 $(brands).each(function(index, brand){
                     selected_subcateg.push($(this).val());
@@ -196,6 +200,7 @@
 
       $('#field').multiselect({
         onChange: function(element, checked) {
+          selected_fields = [];
           var brands = $('#field option:selected');
           $(brands).each(function(index, brand){
               selected_fields.push($(this).val());
@@ -205,17 +210,21 @@
 
 
       $("#download").on('click', function(){
-        $.get(
-          "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/",
-          {
-            categ: JSON.stringify(selected_categ),
-            subcateg: JSON.stringify(selected_subcateg),
-            suburb: JSON.stringify(selected_suburb),
-            city: JSON.stringify(selected_city),
-            fields: JSON.stringify(selected_fields),
-          }, function(data){
-            console.log(data)
-        })
+        var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + JSON.stringify(selected_categ) + "&subcateg=" + JSON.stringify(selected_subcateg) + "&suburb="+ JSON.stringify(selected_suburb) + "&city=" + JSON.stringify(selected_city) + "&fields=" + JSON.stringify(selected_fields)
+
+        window.open(url, '_blank');
+        
+          // $.get(
+          //   "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/",
+          //   {
+          //     categ: JSON.stringify(selected_categ),
+          //     subcateg: JSON.stringify(selected_subcateg),
+          //     suburb: JSON.stringify(selected_suburb),
+          //     city: JSON.stringify(selected_city),
+          //     fields: JSON.stringify(selected_fields),
+          //   }, function(data){
+          //     console.log(data)
+          // })
 
       })
 
