@@ -88,23 +88,20 @@ def fetch_data():
 	if request.method == "GET":
 		olxs = []
 		if phone and adcode:
-			olxs = OLX.query.filter_by(phone_number=phone).filter_by(adcode=adcode).all()
+			olxs = db.session.query(OLX).filter(OLX.phone_number.ilike(phone)).filter(OLX.adcode.ilike(adcode)).all()
 		elif phone:
-			olxs = OLX.query.filter_by(phone_number=phone).all()
+			olxs = db.session.query(OLX).filter(OLX.phone_number.ilike(phone))
 		elif adcode:
-			olxs = OLX.query.filter_by(adcode=adcode).all()
+			olxs = db.session.query(OLX).filter(OLX.adcode.ilike(adcode))
 
 		if city and suburb:
-			olxs = OLX.query.filter_by(city=city).filter_by(suburb=suburb).all()
+			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).filter(OLX.suburb.ilike(suburb)).all()
 		elif city:
-			olxs = OLX.query.filter_by(city=city).all()
+			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).all()
 		elif suburb:
-			olxs = OLX.query.filter_by(suburb=suburb).all()
-
-		if query_param:
-			field = query_param.split("__")[0]
-			param = query_param.split("__")[1]
-			olxs = OLX.query.filter_by(field=param).all()
+			olxs = db.session.query(OLX).filter(OLX.suburb.ilike(suburb)).all()
+		if olxs:
+			olxs = olxs.distinct()
 
 		return json.dumps(OLX.serialize_list(olxs))
 
