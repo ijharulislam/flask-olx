@@ -61,12 +61,22 @@
         </div>
       </div>
 
-      <div class="form-horizontal">
-         <div class="control-group">
-          <label for="name" class="control-label"><p class="text-info">Name&nbsp;<i class="icon-star"></i></p></label>
-          <div class="controls">
-              <input type="text" id="name" placeholder="Enter your name" class="span3">
+      <div class="container">
+        <form role="form" class="form-horizontal">
+          <div class="form-group col-sm-5">
+              <label for="inputPassword" class="col-xs-4 control-label">Email</label>
+              <div class="col-xs-8">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" />
+              </div>
           </div>
+          <div class="form-group col-sm-5">
+              <label for="inputPassword" class="col-xs-4 control-label">Password</label>
+              <div class="col-xs-8">
+                  <input type="password" class="form-control" id="inputPassword" placeholder="Password" />
+              </div>
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>
       </div>
 
     </div>
