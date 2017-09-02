@@ -201,7 +201,7 @@
           for (var k=0; k<suburb.length; k++){
             $('<option>').val(suburb[k]).text(suburb[k]).appendTo('#sucategory');
             if(k==suburb.length-1){
-              $('#sucategory').multiselect();
+              $('#sucategory').multiselect('rebuild');
             }
           }
 
