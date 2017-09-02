@@ -142,7 +142,7 @@
                 $(brands).each(function(index, brand){
                     selected_city.push($(this).val());
                 });
-                setTimeout(getSuburb(selected_city), 1000);
+                getSuburb(selected_city);
             }
           });
 		  });
@@ -152,7 +152,6 @@
 
         $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/suburb_list/", {query: JSON.stringify(selected)}, function(suburb){
           suburb = JSON.parse(suburb)
-          console.log("Selected Suburb", suburb);
           $("#suburb option").remove();
 
           for (var j=0; j<suburb.length; j++){
@@ -192,8 +191,7 @@
                   $(brands).each(function(index, brand){
                       selected_categ.push($(this).val());
                   });
-
-                  setTimeout(getSubCategory(selected_categ), 1000);
+                  getSubCategory(selected_categ)
               }
             });
       });
@@ -202,6 +200,8 @@
       function getSubCategory(selected){
         $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/subcateg_list/", {query: JSON.stringify(selected)}, function(subcat){
           subcat = JSON.parse(subcat)
+
+          $("#sucategory option").remove();
 
           for (var k=0; k<subcat.length; k++){
             $('<option>').val(subcat[k]).text(subcat[k]).appendTo('#sucategory');
@@ -240,20 +240,8 @@
 
       $("#download").on('click', function(){
         var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + JSON.stringify(selected_categ) + "&subcateg=" + JSON.stringify(selected_subcateg) + "&suburb="+ JSON.stringify(selected_suburb) + "&city=" + JSON.stringify(selected_city) + "&fields=" + JSON.stringify(selected_fields)
-
-        window.open(url, '_blank');
         
-          // $.get(
-          //   "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/",
-          //   {
-          //     categ: JSON.stringify(selected_categ),
-          //     subcateg: JSON.stringify(selected_subcateg),
-          //     suburb: JSON.stringify(selected_suburb),
-          //     city: JSON.stringify(selected_city),
-          //     fields: JSON.stringify(selected_fields),
-          //   }, function(data){
-          //     console.log(data)
-          // })
+          window.open(url, '_blank');
 
       })
 
