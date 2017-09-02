@@ -280,6 +280,7 @@ def suburb_list():
 			suburb_list = [row.suburb for row in suburb if row.suburb]
 			suburbs.append(suburb_list)
 		suburbs = sum(suburbs, [])
+		suburbs = [i for i in suburbs if i]
 		return json.dumps(suburbs)
 
 
@@ -302,6 +303,7 @@ def subcateg_list():
 			sub_category_list = [row.sub_category for row in sub_category]
 			sub_categories.append(sub_category_list)
 		sub_categories = sum(sub_categories, [])
+		sub_categories = [i for i in sub_categories if i]
 		return json.dumps(sub_categories)
 
 
