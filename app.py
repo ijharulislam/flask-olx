@@ -277,7 +277,7 @@ def suburb_list():
 		suburbs = []
 		for q in query:
 			suburb = db.session.query(OLX.suburb.distinct().label("suburb")).filter(OLX.city.startswith(q)).all()
-			suburb_list = [row.suburb for row in suburb]
+			suburb_list = [row.suburb for row in suburb if row.suburb]
 			suburbs.append(suburb_list)
 		suburbs = sum(suburbs, [])
 		return json.dumps(suburbs)
