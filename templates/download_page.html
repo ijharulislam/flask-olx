@@ -156,6 +156,9 @@
 
           for (var j=0; j<suburb.length; j++){
             $('<option>').val(suburb[j]).text(suburb[j]).appendTo('#suburb');
+            if(k==suburb.length-1){
+              $('#suburb').multiselect('rebuild');
+            }
           }
 
 
@@ -195,12 +198,12 @@
 
 
       function getSubCategory(selected){
-        $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/subcateg_list/", {query: JSON.stringify(selected)}, function(suburb){
-          suburb = JSON.parse(suburb)
+        $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/subcateg_list/", {query: JSON.stringify(selected)}, function(subcat){
+          subcat = JSON.parse(subcat)
 
-          for (var k=0; k<suburb.length; k++){
-            $('<option>').val(suburb[k]).text(suburb[k]).appendTo('#sucategory');
-            if(k==suburb.length-1){
+          for (var k=0; k<subcat.length; k++){
+            $('<option>').val(subcat[k]).text(subcat[k]).appendTo('#sucategory');
+            if(k==subcat.length-1){
               $('#sucategory').multiselect('rebuild');
             }
           }
