@@ -158,15 +158,19 @@
             $('<option>').val(suburb[j]).text(suburb[j]).appendTo('#suburb');
           }
 
+          setTimeout(
+
           $('#suburb').multiselect({
             onChange: function(element, checked) {
                 selected_suburb = []
-                var brands = $('#city option:selected');
+                var brands = $('#suburb option:selected');
                 $(brands).each(function(index, brand){
                     selected_suburb.push($(this).val());
                 });
             }
-          });
+          }),
+          2000);
+
 
         });
       }
