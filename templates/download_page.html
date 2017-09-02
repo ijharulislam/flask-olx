@@ -73,7 +73,7 @@
             <div class="col-md-6 text-center">
              <button class="btn btn-default" id="download">Download CSV</button>
             </div>
-          </div>
+        </div>
       </div>
 
  
@@ -140,7 +140,7 @@
                 $(brands).each(function(index, brand){
                     selected_city.push($(this).val());
                 });
-                getSuburb(selected_city)
+                setTimeout(getSuburb(selected_city), 1000);
             }
           });
 		  });
@@ -181,7 +181,8 @@
                   $(brands).each(function(index, brand){
                       selected_categ.push($(this).val());
                   });
-                  getSubCategory(selected_categ)
+
+                  setTimeout(getSubCategory(selected_categ), 1000);
               }
             });
       });
