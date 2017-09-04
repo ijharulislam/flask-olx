@@ -32,7 +32,8 @@
           <div class="form-group col-sm-5">
               <label for="inputPassword" class="col-xs-4 control-label">Select City</label>
               <div class="col-xs-8">
-                  <input type="text" id="city"></input>
+                  <select name="groupid" id="city" multiple="multiple">
+                  </select>
               </div>
           </div>
           <div class="form-group col-sm-5">
@@ -86,13 +87,11 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
    
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
-   
+    <script src="http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/static/jquery.autocomplete.multiselect.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.min.js"></script>
-
-    <script src="http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/static/jquery.autocomplete.multiselect.js"></script> 
 
 
     <script type="text/javascript">
@@ -132,30 +131,21 @@
 
 	    $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/city_list/", function( data ) {
 				  data = JSON.parse(data)
-				  // for (var i=0; i<data.length; i++){
-				  // 	$('<option>').val(data[i]).text(data[i]).appendTo('#city');
-				  // }
-          $('#city').autocomplete({
-            source: data,
-            multiselect: true,
-            select: function(event, ui) {
-              alert( "You selected: " + ui.item.label );
+				  for (var i=0; i<data.length; i++){
+				  	$('<option>').val(data[i]).text(data[i]).appendTo('#city');
+				  }
+
+          $('#city').multiselect({
+            onChange: function(element, checked) {
+                selected_city = [];
+                var brands = $('#city option:selected');
+                $(brands).each(function(index, brand){
+                    selected_city.push($(this).val());
+                });
+                getSuburb(selected_city);
             }
           });
-
-          // $('#city').multiselect({
-          //   onChange: function(element, checked) {
-          //       selected_city = [];
-          //       var brands = $('#city option:selected');
-          //       $(brands).each(function(index, brand){
-          //           selected_city.push($(this).val());
-          //       });
-          //       getSuburb(selected_city);
-          //   }
-          // });
 		  });
-
-
 
       function getSuburb(selected){
         console.log("Selected Data", selected);

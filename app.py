@@ -255,7 +255,7 @@ def csv_download():
 @app.route('/download_page/', methods=['GET'])
 def download_page():
 	if request.method == "GET":
-		return render_template("download_page.html")
+		return render_template("download_page2.html")
 
 
 @app.route("/city_list/",  methods=['GET'])
