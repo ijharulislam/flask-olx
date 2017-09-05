@@ -86,10 +86,7 @@
         lastText = ui.item.label;
         selected_city.push(lastText);
         getSuburb(selected_city)
-    }).on("autocompletechange", function(event,ui) {
-       alert($(this).val());
-       getSuburb(selected_city)
-      })
+    })
       .focus(function(){
           $(this).autocomplete("search", $(this).val());
       })

@@ -64,8 +64,9 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
                                     if(i != -1) {
                                         selected_city.splice(i, 1);
                                     }
-                                    
+                                    getSuburb(selected_city);
                                 }
+                                
                                 if(jQuery.inArray(item.text(), selected_suburb) !== -1){
                                     var i = selected_suburb.indexOf(item.text());
                                     if(i != -1) {
