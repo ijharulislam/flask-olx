@@ -68,7 +68,7 @@ def hello():
 		print(row.phone_number)
 		db.session.add(row)
 		db.session.commit()
-    return "OLX APP"
+	return "OLX APP"
 
 
 @app.route('/post_data', methods=['GET', 'POST'])
