@@ -93,12 +93,16 @@ function getSuburb(selected_city){
     suburb = JSON.parse(suburb)
     console.log("suburb", suburb)
     $('#suburb').autocomplete({
+        minLength: 0,
         source: suburb,
         multiselect: true
-      }).on('autocompleteselect', function(ev, ui) {
+      }).focus(function(){
+          $(this).autocomplete("search", $(this).val());
+      })
+    .on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
         console.log(lastText);
-    })  
+    })
   });
 }
 
