@@ -109,10 +109,9 @@ function getSuburb(){
   });
 }
 
-$(".ui-icon-close").on("click", function(){
-  var da = $(this).closest("div").text();
-  console.log("data", da)
-})
+$('.ui-icon-close').on('click', function () {
+    alert("test");
+});
 
 $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/", function( data ) {
       data = JSON.parse(data)
