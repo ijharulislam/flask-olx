@@ -82,21 +82,13 @@
         source: data,
         multiselect: true
       }).on('autocompleteselect', function(ev, ui) {
-
-        var brands = $('.ui-autocomplete-multiselect-item');
-          $(brands).each(function(){
-              selected_city.push($(this).text());
-        });
-        
-        setTimeout(getSuburb, 1000)
-        
         lastText = ui.item.label;
+        selected_city.push(lastText);
+        getSuburb(selected_city)
     })   
 });
 
-function getSuburb(){
-  console.log(selected_city)
-
+function getSuburb(selected_city){
   $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/suburb_list/", {query: JSON.stringify(selected_city)}, function(suburb){
     suburb = JSON.parse(suburb)
     $('#suburb').autocomplete({
@@ -109,9 +101,11 @@ function getSuburb(){
   });
 }
 
-$('ui-autocomplete-multiselect-item').on('click', function () {
-    alert("test");
-});
+// var brands = $('.ui-autocomplete-multiselect-item');
+// $(brands).each(function(){
+//     selected_city.push($(this).text());
+// });
+
 
 $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/", function( data ) {
       data = JSON.parse(data)
