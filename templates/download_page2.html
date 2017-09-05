@@ -81,9 +81,15 @@
       $('#city').autocomplete({
         source: data,
         multiselect: true
-      }).on('autocompleteselect autocompletefocus', function(ev, ui) {
+      }).on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
-        console.log(lastText);
+        selected_city = [];
+        var brands = $('.ui-autocomplete-multiselect-item');
+        $(brands).each(function(index, brand){
+            selected_city.push($(this).val());
+        });
+        console.log(selected_city);
+
     })   
 });
 

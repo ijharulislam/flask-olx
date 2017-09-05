@@ -68,7 +68,6 @@ def post_data():
 		if not request.json:
 			abort(400)
 		json_dict = request.get_json()
-		print(json_dict)
 		olx = OLX(**json_dict)
 		db.session.add(olx)
 		db.session.commit()
