@@ -277,6 +277,7 @@ def suburb_list():
 			suburbs.append(suburb_list)
 		suburbs = sum(suburbs, [])
 		suburbs = sorted([i for i in suburbs if i])
+		suburbs = list(set(suburbs))
 		return json.dumps(suburbs)
 
 
