@@ -84,18 +84,13 @@
       });   
 });
 
-
-$('.ui-autocomplete-multiselect ui-state-default ui-widget').bind('DOMNodeInserted DOMNodeRemoved', function(event) {
-    if (event.type == 'DOMNodeInserted') {
-        alert('Content added! Current content:' + '\n\n' + this.innerHTML);
-    } else {
-        alert('Content removed! Current content:' + '\n\n' + this.innerHTML);
-    }
+$("body").on('DOMSubtreeModified', ".ui-autocomplete-multiselect ui-state-default ui-widget", function() {
+    alert('Content Modified'); // do something
 });
 
 
 
- $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/", function( data ) {
+$.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/", function( data ) {
       data = JSON.parse(data)
 
       $('#category').autocomplete({
