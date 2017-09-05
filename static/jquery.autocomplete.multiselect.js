@@ -58,6 +58,40 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
                                 var item = $(this).parent();
                                 delete self.selectedItems[item.text()];
                                 item.remove();
+                              
+                                if(jQuery.inArray(item.text(), selected_city) !== -1){
+                                    var i = selected_city.indexOf(item.text());
+                                    if(i != -1) {
+                                        selected_city.splice(i, 1);
+                                    }
+                                    
+                                }
+                                if(jQuery.inArray(item.text(), selected_suburb) !== -1){
+                                    var i = selected_suburb.indexOf(item.text());
+                                    if(i != -1) {
+                                        selected_suburb.splice(i, 1);
+                                    }
+                                }
+                                if(jQuery.inArray(item.text(), selected_categ) !== -1){
+                                    var i = selected_categ.indexOf(item.text());
+                                    if(i != -1) {
+                                        selected_categ.splice(i, 1);
+                                    }
+                                }
+
+                                if(jQuery.inArray(item.text(), selected_subcateg) !== -1){
+                                    var i = selected_subcateg.indexOf(item.text());
+                                    if(i != -1) {
+                                        selected_subcateg.splice(i, 1);
+                                    }
+                                }
+
+                                if(jQuery.inArray(item.text(), selected_fields) !== -1){
+                                    var i = selected_fields.indexOf(item.text());
+                                    if(i != -1) {
+                                        selected_fields.splice(i, 1);
+                                    }
+                                }
                             })
                     )
                     .insertBefore(self.element);

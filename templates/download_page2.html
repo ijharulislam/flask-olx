@@ -104,6 +104,7 @@ function getSuburb(selected_city){
       })
     .on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
+        selected_suburb.push(lastText)
         console.log(lastText);
     })
   });
