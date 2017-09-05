@@ -79,6 +79,7 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
                                     if(i != -1) {
                                         selected_categ.splice(i, 1);
                                     }
+                                    getSubCategory(selected_categ)
                                 }
 
                                 if(jQuery.inArray(item.text(), selected_subcateg) !== -1){
