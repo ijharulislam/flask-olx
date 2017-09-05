@@ -81,7 +81,9 @@
       $('#city').autocomplete({
         source: data,
         multiselect: true
+      });   
 });
+
 
 $('#city').bind('DOMNodeInserted DOMNodeRemoved', function(event) {
     if (event.type == 'DOMNodeInserted') {
@@ -90,6 +92,8 @@ $('#city').bind('DOMNodeInserted DOMNodeRemoved', function(event) {
         alert('Content removed! Current content:' + '\n\n' + this.innerHTML);
     }
 });
+
+
 
  $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/", function( data ) {
       data = JSON.parse(data)
