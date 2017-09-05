@@ -79,13 +79,16 @@
  $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/city_list/", function( data ) {
       data = JSON.parse(data)
       $('#city').autocomplete({
+        minLength: 0,
         source: data,
         multiselect: true
       }).on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
         selected_city.push(lastText);
         getSuburb(selected_city)
-    })   
+    }).focus(function(){
+          $(this).autocomplete("search", $(this).val());
+      })
 });
 
 function getSuburb(selected_city){
