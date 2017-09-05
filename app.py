@@ -57,6 +57,13 @@ data = {
 }
 
 
+q = db.session.query(OLX).filter(OLX.phone_number.startswith("(")).all()
+for row in q:
+	row.phone_number = row.phone_number.replace("(","").replace(")", "").replace(" ","").strip()
+    row.phone_number = "55{0}".format(row.phone_number)
+    print(row.phone_number)
+	db.session.commit()
+
 @app.route('/')
 def hello():
     return "OLX APP"
