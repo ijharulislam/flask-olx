@@ -85,8 +85,8 @@
         lastText = ui.item.label;
         selected_city = [];
         var brands = $('.ui-autocomplete-multiselect-item');
-        $(brands).each(function(index, brand){
-            selected_city.push($(this).val());
+        $(brands).each(function(){
+            selected_city.push($(this).text());
         });
         console.log(selected_city);
 
