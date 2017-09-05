@@ -82,26 +82,34 @@
         source: data,
         multiselect: true
       }).on('autocompleteselect', function(ev, ui) {
+        getSuburb()
         lastText = ui.item.label;
-        selected_city = [];
-        var brands = $('.ui-autocomplete-multiselect-item');
-        $(brands).each(function(){
-            selected_city.push($(this).text());
-        });
         console.log(selected_city);
-
     })   
 });
 
-$("body").on('DOMSubtreeModified', ".ui-autocomplete-multiselect ui-state-default", function() {
-    alert('Content Modified'); // do something
-});
+function getSuburb(){
+  selected_city = [];
+  var brands = $('.ui-autocomplete-multiselect-item');
+  $(brands).each(function(){
+      selected_city.push($(this).text());
+  });
+  console.log(selected_city)
 
-
+  $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/suburb_list/", {query: JSON.stringify(selected_city)}, function(suburb){
+    suburb = JSON.parse(suburb)
+    $('#suburb').autocomplete({
+        source: suburb,
+        multiselect: true
+      }).on('autocompleteselect', function(ev, ui) {
+        lastText = ui.item.label;
+        console.log(lastText);
+    })  
+  });
+}
 
 $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/", function( data ) {
       data = JSON.parse(data)
-
       $('#category').autocomplete({
       source: data,
         multiselect: true
