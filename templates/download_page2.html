@@ -85,7 +85,7 @@
 });
 
 
-$('#city').bind('DOMNodeInserted DOMNodeRemoved', function(event) {
+$('.ui-autocomplete-multiselect ui-state-default ui-widget').bind('DOMNodeInserted DOMNodeRemoved', function(event) {
     if (event.type == 'DOMNodeInserted') {
         alert('Content added! Current content:' + '\n\n' + this.innerHTML);
     } else {
