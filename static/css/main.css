@@ -89,7 +89,7 @@ textarea {
 }
 
 .ui-autocomplete {
-    max-height: 200px;
+    max-height: 280px;
     overflow-y: auto;
     /* prevent horizontal scrollbar */
     overflow-x: hidden;
@@ -100,7 +100,7 @@ textarea {
  * we use height instead, but this forces the menu to always be this tall
  */
 * html .ui-autocomplete {
-    height: 200px;
+    height: 280px;
 }
 
 .ui-autocomplete-multiselect.ui-state-default {
