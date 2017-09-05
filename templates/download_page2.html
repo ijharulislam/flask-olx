@@ -81,7 +81,10 @@
       $('#city').autocomplete({
         source: data,
         multiselect: true
-      });   
+      }).on('autocompleteselect autocompletefocus', function(ev, ui) {
+        lastText = ui.item.label;
+        console.log(lastText);
+    })   
 });
 
 $("body").on('DOMSubtreeModified', ".ui-autocomplete-multiselect ui-state-default", function() {
