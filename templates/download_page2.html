@@ -43,11 +43,51 @@
 
  <script type="text/javascript">
 
+  var selected_city = [];
+  var selected_suburb = [];
+  var selected_categ = [];
+  var selected_subcateg = [];
+  var selected_fields = [];
+
+  var field_list = [
+    "id",
+    "title",
+    "ads",
+    "name",
+    "surname",
+    "timestamp",
+    "status",
+    "comment",
+    "phone",
+    "phone_number",
+    "price",
+    "description",
+    "sub_category",
+    "novo_usado",
+    "city",
+    "suburb",
+    "zipcode",
+    "adcode",
+    "image_urls",
+    "main_image_urls",
+    "day",
+    "month",
+    "time",
+    "main_category"
+  ]
+
  $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/city_list/", function( data ) {
       data = JSON.parse(data)
       $('#city').autocomplete({
         source: data,
-        multiselect: true
+        multiselect: true,
+        select: function( event , ui ) {
+          $("#city").each(function(index, selected) {
+            var curr = $(this).autocomplete("instance").selectedItem;
+            selected_city.append(curr.label);
+          });
+          console.log(selected_city);
+        }
       });   
   });
 

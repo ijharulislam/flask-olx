@@ -72,6 +72,18 @@ textarea {
     width: 100%;
 }
 
+#category {
+    width: 100%;
+}
+
+#suburb {
+    width: 100%;
+}
+
+#sucategory {
+    width: 100%;
+}
+
 .ui-autocomplete-multiselect.ui-state-default {
     display: block;
     background: #fff;
