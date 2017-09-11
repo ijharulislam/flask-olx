@@ -130,20 +130,20 @@ def csv_download():
 
 		if suburb and subcateg and city and categ:
 			for cit in city:
-				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
+				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit)).from_self()
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(cat))
+					olxs = olxs.filter(OLX.main_category.ilike(cat)).from_self()
 					for c in suburb:
-						olxs = olxs.filter(OLX.suburb.ilike(c))
+						olxs = olxs.filter(OLX.suburb.ilike(c)).from_self()
 						for sub in subcateg:
-							olxs = olxs.filter(OLX.sub_category.ilike(sub))
+							olxs = olxs.filter(OLX.sub_category.ilike(sub)).from_self()
 							olxs = olxs.distinct()
 							count = olxs.count()
 							if count:
 								count = count + 1
 								for c in range(1, count, 10):
-									olxs = olxs.limit(10)
-									olxs = olxs.offset(c)
+									olxs = olxs.limit(10).from_self()
+									olxs = olxs.offset(c).from_self()
 									dat = [row for row in olxs.all()]
 									dat = OLX.serialize_list(dat)
 									for d in dat:
@@ -155,37 +155,49 @@ def csv_download():
 
 		elif city and categ and subcateg:
 			for cit in city:
-				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
+				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit)).from_self()
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(cat))
+					olxs = olxs.filter(OLX.main_category.ilike(cat)).from_self()
 					for sub in subcateg:
-						olxs = olxs.filter(OLX.sub_category.ilike(sub))
+						olxs = olxs.filter(OLX.sub_category.ilike(sub)).from_self()
 						olxs = olxs.distinct()
-						dat = [row for row in olxs.all()]
-						dat = OLX.serialize_list(dat)
-						for d in dat:
-							# print("Data", d)
-							obj = {}
-							for f in fields:
-								 obj[f] =  d[f]
-							results.append(obj)
+						count = olxs.count()
+						if count:
+							count = count + 1
+							for c in range(1, count, 10):
+								olxs = olxs.limit(10).from_self()
+								olxs = olxs.offset(c).from_self()
+								dat = [row for row in olxs.all()]
+								dat = OLX.serialize_list(dat)
+								for d in dat:
+									# print("Data", d)
+									obj = {}
+									for f in fields:
+										 obj[f] =  d[f]
+									results.append(obj)
 
 		elif city and categ and suburb:
 			for cit in city:
-				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
+				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit)).from_self()
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(cat))
+					olxs = olxs.filter(OLX.main_category.ilike(cat)).from_self()
 					for c in suburb:
-						olxs = olxs.filter(OLX.suburb.ilike(c))
+						olxs = olxs.filter(OLX.suburb.ilike(c)).from_self()
 						olxs = olxs.distinct()
-						dat = [row for row in olxs.all()]
-						dat = OLX.serialize_list(dat)
-						for d in dat:
-							# print("Data", d)
-							obj = {}
-							for f in fields:
-								 obj[f] =  d[f]
-							results.append(obj)
+						count = olxs.count()
+						if count:
+							count = count + 1
+							for c in range(1, count, 10):
+								olxs = olxs.limit(10).from_self()
+								olxs = olxs.offset(c).from_self()
+								dat = [row for row in olxs.all()]
+								dat = OLX.serialize_list(dat)
+								for d in dat:
+									# print("Data", d)
+									obj = {}
+									for f in fields:
+										 obj[f] =  d[f]
+									results.append(obj)
 
 		elif city and suburb:
 			for cit in city:
@@ -210,69 +222,99 @@ def csv_download():
 
 		elif city and categ:
 			for cit in city:
-				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
+				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit)).from_self()
 				for cat in categ:
-					olxs = olxs.filter(OLX.main_category.ilike(cat))
+					olxs = olxs.filter(OLX.main_category.ilike(cat)).from_self()
 					olxs = olxs.distinct()
-					dat = [row for row in olxs.all()]
-					dat = OLX.serialize_list(dat)
-					for d in dat:
-						# print("Data", d)
-						obj = {}
-						for f in fields:
-							 obj[f] =  d[f]
-						results.append(obj)
+					count = olxs.count()
+					if count:
+						count = count + 1
+						for c in range(1, count, 10):
+							olxs = olxs.limit(10).from_self()
+							olxs = olxs.offset(c).from_self()
+							dat = [row for row in olxs.all()]
+							dat = OLX.serialize_list(dat)
+							for d in dat:
+								# print("Data", d)
+								obj = {}
+								for f in fields:
+									 obj[f] =  d[f]
+								results.append(obj)
 		elif city:
 			for cit in city:
-				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
+				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit)).from_self()
 				olxs = olxs.distinct()
-				dat = [row for row in olxs.all()]
-				dat = OLX.serialize_list(dat)
-				for d in dat:
-					# print("Data", d)
-					obj = {}
-					for f in fields:
-						 obj[f] =  d[f]
-					results.append(obj)
+				count = olxs.count()
+				if count:
+					count = count + 1
+					for c in range(1, count, 10):
+						olxs = olxs.limit(10).from_self()
+						olxs = olxs.offset(c).from_self()
+						dat = [row for row in olxs.all()]
+						dat = OLX.serialize_list(dat)
+						for d in dat:
+							# print("Data", d)
+							obj = {}
+							for f in fields:
+								 obj[f] =  d[f]
+							results.append(obj)
 
 		elif categ:
 			for cat in categ:
-				olxs = db.session.query(OLX).filter(OLX.main_category.ilike(cat))
+				olxs = db.session.query(OLX).filter(OLX.main_category.ilike(cat)).from_self()
 				olxs = olxs.distinct()
-				dat = [row for row in olxs.all()]
-				dat = OLX.serialize_list(dat)
-				for d in dat:
-					# print("Data", d)
-					obj = {}
-					for f in fields:
-						 obj[f] =  d[f]
-					results.append(obj)
+				count = olxs.count()
+				if count:
+					count = count + 1
+					for c in range(1, count, 10):
+						olxs = olxs.limit(10).from_self()
+						olxs = olxs.offset(c).from_self()
+						dat = [row for row in olxs.all()]
+						dat = OLX.serialize_list(dat)
+						for d in dat:
+							# print("Data", d)
+							obj = {}
+							for f in fields:
+								 obj[f] =  d[f]
+							results.append(obj)
 
 		elif suburb:
 			for c in suburb:
-				olxs = db.session.query(OLX).filter(OLX.suburb.ilike(c))
+				olxs = db.session.query(OLX).filter(OLX.suburb.ilike(c)).from_self()
 				olxs = olxs.distinct()
-				dat = [row for row in olxs.all()]
-				dat = OLX.serialize_list(dat)
-				for d in dat:
-					# print("Data", d)
-					obj = {}
-					for f in fields:
-						 obj[f] =  d[f]
-					results.append(obj)
+				count = olxs.count()
+				if count:
+					count = count + 1
+					for c in range(1, count, 10):
+						olxs = olxs.limit(10).from_self()
+						olxs = olxs.offset(c).from_self()
+						dat = [row for row in olxs.all()]
+						dat = OLX.serialize_list(dat)
+						for d in dat:
+							# print("Data", d)
+							obj = {}
+							for f in fields:
+								 obj[f] =  d[f]
+							results.append(obj)
 
 		elif subcateg:
 			for sub in subcateg:
-				olxs = db.session.query(OLX).filter(OLX.sub_category.ilike(sub))
+				olxs = db.session.query(OLX).filter(OLX.sub_category.ilike(sub)).from_self()
 				olxs = olxs.distinct()
-				dat = [row for row in olxs.all()]
-				dat = OLX.serialize_list(dat)
-				for d in dat:
-					# print("Data", d)
-					obj = {}
-					for f in fields:
-						 obj[f] =  d[f]
-					results.append(obj)
+				count = olxs.count()
+				if count:
+					count = count + 1
+					for c in range(1, count, 10):
+						olxs = olxs.limit(10).from_self()
+						olxs = olxs.offset(c).from_self()
+						dat = [row for row in olxs.all()]
+						dat = OLX.serialize_list(dat)
+						for d in dat:
+							# print("Data", d)
+							obj = {}
+							for f in fields:
+								 obj[f] =  d[f]
+							results.append(obj)
 
 		data = results
 		if data:
