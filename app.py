@@ -195,7 +195,7 @@ def csv_download():
 					count = olxs.count()
 					if count:
 						for c in range(1, 10, count):
-							olxs = olxs.limit(10)
+							olxs = olxs.limit(10).from_self()
 							olxs = olxs.offset(c)
 							dat = [row for row in olxs.all()]
 							dat = OLX.serialize_list(dat)
