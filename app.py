@@ -191,7 +191,7 @@ def csv_download():
 			for cit in city:
 				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit)).from_self()
 				for c in suburb:
-					olxs = olxs.filter(OLX.suburb.ilike(c))
+					olxs = olxs.filter(OLX.suburb.ilike(c)).from_self()
 					olxs = olxs.distinct()
 					count = olxs.count()
 					if count:
