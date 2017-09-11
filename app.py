@@ -138,14 +138,19 @@ def csv_download():
 						for sub in subcateg:
 							olxs = olxs.filter(OLX.sub_category.ilike(sub))
 							olxs = olxs.distinct()
-							dat = [row for row in olxs.all()]
-							dat = OLX.serialize_list(dat)
-							for d in dat:
-								print("Data", d)
-								obj = {}
-								for f in fields:
-									 obj[f] =  d[f]
-								results.append(obj)
+							count = olxs.count()
+
+							for c in range(1, 10, count):
+								olxs = olxs.limit(10)
+								olxs = olxs.offset(c)
+								dat = [row for row in olxs.all()]
+								dat = OLX.serialize_list(dat)
+								for d in dat:
+									# print("Data", d)
+									obj = {}
+									for f in fields:
+										 obj[f] =  d[f]
+									results.append(obj)
 
 		elif city and categ and subcateg:
 			for cit in city:
@@ -158,7 +163,7 @@ def csv_download():
 						dat = [row for row in olxs.all()]
 						dat = OLX.serialize_list(dat)
 						for d in dat:
-							print("Data", d)
+							# print("Data", d)
 							obj = {}
 							for f in fields:
 								 obj[f] =  d[f]
@@ -175,7 +180,7 @@ def csv_download():
 						dat = [row for row in olxs.all()]
 						dat = OLX.serialize_list(dat)
 						for d in dat:
-							print("Data", d)
+							# print("Data", d)
 							obj = {}
 							for f in fields:
 								 obj[f] =  d[f]
@@ -190,7 +195,7 @@ def csv_download():
 					dat = [row for row in olxs.all()]
 					dat = OLX.serialize_list(dat)
 					for d in dat:
-						print("Data", d)
+						# print("Data", d)
 						obj = {}
 						for f in fields:
 							 obj[f] =  d[f]
@@ -202,7 +207,7 @@ def csv_download():
 				dat = [row for row in olxs.all()]
 				dat = OLX.serialize_list(dat)
 				for d in dat:
-					print("Data", d)
+					# print("Data", d)
 					obj = {}
 					for f in fields:
 						 obj[f] =  d[f]
@@ -215,7 +220,7 @@ def csv_download():
 				dat = [row for row in olxs.all()]
 				dat = OLX.serialize_list(dat)
 				for d in dat:
-					print("Data", d)
+					# print("Data", d)
 					obj = {}
 					for f in fields:
 						 obj[f] =  d[f]
@@ -228,7 +233,7 @@ def csv_download():
 				dat = [row for row in olxs.all()]
 				dat = OLX.serialize_list(dat)
 				for d in dat:
-					print("Data", d)
+					# print("Data", d)
 					obj = {}
 					for f in fields:
 						 obj[f] =  d[f]
@@ -241,7 +246,7 @@ def csv_download():
 				dat = [row for row in olxs.all()]
 				dat = OLX.serialize_list(dat)
 				for d in dat:
-					print("Data", d)
+					# print("Data", d)
 					obj = {}
 					for f in fields:
 						 obj[f] =  d[f]
