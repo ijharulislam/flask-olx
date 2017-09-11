@@ -200,7 +200,7 @@ def csv_download():
 							dat = [row for row in olxs.all()]
 							dat = OLX.serialize_list(dat)
 							for d in dat:
-								# print("Data", d)
+								print("Data", d)
 								obj = {}
 								for f in fields:
 									 obj[f] =  d[f]
