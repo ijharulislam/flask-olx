@@ -186,6 +186,26 @@ def csv_download():
 								 obj[f] =  d[f]
 							results.append(obj)
 
+		elif city and suburb:
+			for cit in city:
+				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
+				for c in suburb:
+					olxs = olxs.filter(OLX.suburb.ilike(c))
+					olxs = olxs.distinct()
+					count = olxs.count()
+					if count:
+						for c in range(1, 10, count):
+							olxs = olxs.limit(10)
+							olxs = olxs.offset(c)
+							dat = [row for row in olxs.all()]
+							dat = OLX.serialize_list(dat)
+							for d in dat:
+								# print("Data", d)
+								obj = {}
+								for f in fields:
+									 obj[f] =  d[f]
+								results.append(obj)
+
 		elif city and categ:
 			for cit in city:
 				olxs = db.session.query(OLX).filter(OLX.city.ilike(cit))
