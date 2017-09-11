@@ -140,7 +140,8 @@ def csv_download():
 							olxs = olxs.distinct()
 							count = olxs.count()
 							if count:
-								for c in range(1, 10, count):
+								count = count + 1
+								for c in range(1, count, 10):
 									olxs = olxs.limit(10)
 									olxs = olxs.offset(c)
 									dat = [row for row in olxs.all()]
@@ -194,7 +195,8 @@ def csv_download():
 					olxs = olxs.distinct()
 					count = olxs.count()
 					if count:
-						for c in range(1, 10, count):
+						count = count + 1
+						for c in range(1, count, 10):
 							olxs = olxs.limit(10).from_self()
 							olxs = olxs.offset(c)
 							dat = [row for row in olxs.all()]
