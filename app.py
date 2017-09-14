@@ -117,13 +117,13 @@ def fetch_data():
 
 @app.route('/download/', methods=['GET'])
 def csv_download():
-	categ = json.loads(request.args.get('categ', ""))
-	subcateg = json.loads(request.args.get('subcateg', ""))
-	suburb = json.loads(request.args.get('suburb', ""))
-	city = json.loads(request.args.get('city', ""))
+	categ = request.args.get('categ', None)
+	subcateg = request.args.get('subcateg', "")
+	suburb = request.args.get('suburb', "")
+	city = request.args.get('city', "")
 	fields = json.loads(request.args.get('fields', ""))
-	limit = json.loads(request.args.get('limit', 1000))
-	offset = json.loads(request.args.get('offset', 0))
+	limit = request.args.get('limit', 1000)
+	offset = request.args.get('offset', 0)
 
 	results = []
 	olxs = []
