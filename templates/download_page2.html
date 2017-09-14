@@ -111,7 +111,7 @@
 });
 
 function getSuburb(selected_city){
-  $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/suburb_list/", {query: JSON.stringify(selected_city)}, function(suburb){
+  $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/suburb_list/", {query: selected_city}, function(suburb){
     suburb = JSON.parse(suburb)
     console.log("suburb", suburb)
     $('#suburb').autocomplete({

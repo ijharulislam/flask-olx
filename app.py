@@ -127,7 +127,7 @@ def csv_download():
 
 	results = []
 	olxs = []
-	
+
 	if not fields:
 		fields = ['title', 'phone_number']
 
@@ -194,16 +194,12 @@ def city_list():
 @app.route("/suburb_list/",  methods=['GET'])
 def suburb_list():
 	if request.method == "GET":
-		query = request.args.get('query', [])
-		query = json.loads(query)
-		suburbs = []
-		for q in query:
-			suburb = db.session.query(OLX.suburb.distinct().label("suburb")).filter(OLX.city.startswith(q)).all()
-			suburb_list = [row.suburb for row in suburb if row.suburb]
-			suburbs.append(suburb_list)
-		suburbs = sum(suburbs, [])
-		suburbs = sorted([i for i in suburbs if i])
-		suburbs = list(set(suburbs))
+		query = request.args.get('query')
+
+		suburb = db.session.query(OLX.suburb.distinct().label("suburb")).filter(OLX.city.startswith(query)).all()
+		suburb_list = [row.suburb for row in suburb if row.suburb]
+		suburbs = sorted([i for i in suburb_list if i])
+		suburbs = list(set(suburb_list))
 		return json.dumps(suburbs)
 
 
@@ -218,15 +214,12 @@ def categ_list():
 @app.route("/subcateg_list/",  methods=['GET'])
 def subcateg_list():
 	if request.method == "GET":
-		query = request.args.get('query', [])
-		query = json.loads(query)
-		sub_categories = []
-		for q in query:
-			sub_category = db.session.query(OLX.sub_category.distinct().label("sub_category")).filter(OLX.main_category.startswith(q)).all()
-			sub_category_list = [row.sub_category for row in sub_category]
-			sub_categories.append(sub_category_list)
-		sub_categories = sum(sub_categories, [])
-		sub_categories = sorted([i for i in sub_categories if i])
+		query = request.args.get('query')
+		sub_category = db.session.query(OLX.sub_category.distinct().label("sub_category")).filter(OLX.main_category.startswith(query)).all()
+		sub_category_list = [row.sub_category for row in sub_category]
+		sub_categories = sorted([i for i in sub_category_list if i])
+		sub_categories = list(set(sub_categories))
+
 		return json.dumps(sub_categories)
 
 
