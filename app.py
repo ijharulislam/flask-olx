@@ -127,7 +127,7 @@ def csv_download():
 	print(categ, subcateg, suburb)
 	results = []
 	olxs = []
-	print(city != "")
+	print(city != "", suburb != "")
 	if request.method == "GET":
 
 		if city and city != "" and suburb and suburb != "":
