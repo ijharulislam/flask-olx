@@ -122,7 +122,7 @@ def csv_download():
 	suburb = request.args.get('suburb', None)
 	city = request.args.get('city', None)
 	fields = json.loads(request.args.get('fields', ""))
-	limit = request.args.get('limit', 1000)
+	limit = request.args.get('limit', 10000)
 	offset = request.args.get('offset', 0)
 	print(categ, subcateg, suburb)
 	results = []
@@ -151,8 +151,9 @@ def csv_download():
 
 		if limit:
 			olxs = olxs.limit(int(limit))
-		# if offset:
-		# 	olxs = olxs.offset(int(offset))
+
+		if offset:
+			olxs = olxs.offset(int(offset))
 
 		dat = olxs.all()
 
