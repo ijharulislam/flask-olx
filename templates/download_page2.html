@@ -185,7 +185,7 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
         var limit = $('#limit').val();
         var offset = $('#offset').val();
 
-        var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + JSON.stringify(selected_categ) + "&subcateg=" + JSON.stringify(selected_subcateg) + "&suburb="+ JSON.stringify(selected_suburb) + "&city=" + JSON.stringify(selected_city) + "&fields=" + JSON.stringify(selected_fields) + "&limit=" + limit + "&offset=" + offset
+        var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + elected_categ + "&subcateg=" + selected_subcateg + "&suburb="+ selected_suburb + "&city=" + selected_city + "&fields=" + JSON.stringify(selected_fields) + "&limit=" + limit + "&offset=" + offset
         
           window.open(url, '_blank');
 
