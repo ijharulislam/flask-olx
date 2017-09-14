@@ -136,6 +136,7 @@ def csv_download():
 		elif city != "null":
 			print("Inside City")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city))
+			print(olxs.count())
 
 		elif suburb != "null":
 			print("Inside Only Suburb")
@@ -150,10 +151,11 @@ def csv_download():
 
 		if limit:
 			olxs = olxs.limit(int(limit))
-		if offset:
-			olxs = olxs.offset(int(offset))
+		# if offset:
+		# 	olxs = olxs.offset(int(offset))
 
-		dat = [row for row in olxs.all()]
+		dat = olxs.all()
+
 		dat = OLX.serialize_list(dat)
 		for d in dat:
 			obj = {}
