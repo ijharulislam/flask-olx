@@ -124,7 +124,7 @@ def csv_download():
 	fields = json.loads(request.args.get('fields', ""))
 	limit = request.args.get('limit', 1000)
 	offset = request.args.get('offset', 0)
-
+	print(categ, subcateg, suburb)
 	results = []
 	olxs = []
 	if request.method == "GET":
