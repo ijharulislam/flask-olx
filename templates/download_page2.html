@@ -60,10 +60,10 @@
 
  <script type="text/javascript">
 
-  var selected_city = [];
-  var selected_suburb = [];
-  var selected_categ = [];
-  var selected_subcateg = [];
+  var selected_city = null;
+  var selected_suburb = null;
+  var selected_categ = null;
+  var selected_subcateg = null;
   var selected_fields = [];
 
   var field_list = [
@@ -101,7 +101,8 @@
         // multiselect: true
       }).on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
-        selected_city.push(lastText);
+        // selected_city.push(lastText);
+        selected_city = lastText
         getSuburb(selected_city)
     })
       .focus(function(){
@@ -122,7 +123,8 @@ function getSuburb(selected_city){
       })
     .on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
-        selected_suburb.push(lastText)
+        selected_suburb = lastText;
+        // selected_suburb.push(lastText)
         console.log(lastText);
     })
   });
@@ -140,6 +142,7 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
     .on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
         selected_categ.push(lastText)
+        selected_categ = lastText;
         console.log(lastText);
         getSubCategory(selected_categ)
     })
@@ -158,6 +161,7 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
     .on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
         selected_subcateg.push(lastText)
+        selected_subcateg = lastText
         console.log(lastText);
     })
 
@@ -181,7 +185,7 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
         var limit = $('#limit').val();
         var offset = $('#offset').val();
 
-        var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + JSON.stringify(selected_categ[0]) + "&subcateg=" + JSON.stringify(selected_subcateg[0]) + "&suburb="+ JSON.stringify(selected_suburb[0]) + "&city=" + JSON.stringify(selected_city[0]) + "&fields=" + JSON.stringify(selected_fields) + "&limit=" + limit + "&offset=" + offset
+        var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + JSON.stringify(selected_categ) + "&subcateg=" + JSON.stringify(selected_subcateg) + "&suburb="+ JSON.stringify(selected_suburb) + "&city=" + JSON.stringify(selected_city) + "&fields=" + JSON.stringify(selected_fields) + "&limit=" + limit + "&offset=" + offset
         
           window.open(url, '_blank');
 
