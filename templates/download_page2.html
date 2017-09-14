@@ -98,7 +98,7 @@
       $('#city').autocomplete({
         minLength: 0,
         source: data,
-        // multiselect: true
+        multiselect: true
       }).on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
         // selected_city.push(lastText);
@@ -117,7 +117,7 @@ function getSuburb(selected_city){
     $('#suburb').autocomplete({
         minLength: 0,
         source: suburb,
-        // multiselect: true
+        multiselect: true
       }).focus(function(){
           $(this).autocomplete("search", $(this).val());
       })
@@ -135,7 +135,7 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
       $('#category').autocomplete({
         minLength: 0,
         source: data,
-        // multiselect: true
+        multiselect: true
       }).focus(function(){
           $(this).autocomplete("search", $(this).val());
       })
