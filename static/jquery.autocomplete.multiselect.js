@@ -69,7 +69,7 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
                                 // }
 
                                 if(item.text()==selected_city){
-                                    selected_city = "";
+                                    selected_city = null;
                                 }
 
 
@@ -81,7 +81,7 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
                                 // }
 
                                 if(item.text()==selected_suburb){
-                                    selected_suburb = "";
+                                    selected_suburb = null;
                                 }
 
                                 // if(jQuery.inArray(item.text(), selected_categ) !== -1){
@@ -93,8 +93,10 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
                                 // }
 
                                 if(item.text()==selected_categ){
-                                    selected_categ = "";
+                                    selected_categ = null;
                                 }
+
+
 
                                 // if(jQuery.inArray(item.text(), selected_subcateg) !== -1){
                                 //     var i = selected_subcateg.indexOf(item.text());
@@ -104,7 +106,7 @@ $.widget("ui.autocomplete", $.ui.autocomplete, {
                                 // }
 
                                 if(item.text()==selected_subcateg){
-                                    selected_subcateg = "";
+                                    selected_subcateg = null;
                                 }
 
                                 if(jQuery.inArray(item.text(), selected_fields) !== -1){

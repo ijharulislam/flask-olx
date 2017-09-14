@@ -130,22 +130,22 @@ def csv_download():
 	print(city != "", suburb != "")
 	if request.method == "GET":
 
-		if city and city != "" and suburb and suburb != "":
+		if city and city != "null" and suburb and suburb != "null":
 			print("Inside Suburb")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).filter(OLX.suburb.ilike(suburb))
-		elif city !="":
+		elif city != "null":
 			print("Inside City")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city))
 
-		elif suburb != "":
+		elif suburb != "null":
 			print("Inside Only Suburb")
 			olxs = db.session.query(OLX).filter(OLX.suburb.ilike(suburb))
 
-		if categ !="" and olxs and subcateg !="":
+		if categ != "null" and olxs and subcateg != "null":
 			olxs = olxs.filter(OLX.main_category.ilike(categ)).filter(OLX.sub_category.ilike(subcateg))
-		elif olxs and categ !="":
+		elif olxs and categ != "null":
 			olxs = olxs.filter(OLX.main_category.ilike(categ))
-		elif olxs and subcateg !="":
+		elif olxs and subcateg != "null":
 			olxs = olxs.filter(OLX.sub_category.ilike(subcateg))
 
 		if limit:
