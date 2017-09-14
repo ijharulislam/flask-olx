@@ -127,6 +127,10 @@ def csv_download():
 
 	results = []
 	olxs = []
+	
+	if not fields:
+		fields = ['title', 'phone_number']
+
 	if request.method == "GET":
 
 		if city and city != "null" and suburb and suburb != "null":
