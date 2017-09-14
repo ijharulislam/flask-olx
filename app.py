@@ -131,7 +131,9 @@ def csv_download():
 		if city and city != "" and suburb and suburb != "":
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).filter(OLX.suburb.ilike(suburb))
 		elif city !="":
+			print("Inside City")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city))
+
 		elif suburb != "":
 			olxs = db.session.query(OLX).filter(OLX.suburb.ilike(suburb))
 
@@ -143,9 +145,9 @@ def csv_download():
 			olxs = olxs.filter(OLX.sub_category.ilike(subcateg))
 
 		if limit:
-			olxs = olxs.limit(int(limit)).from_self()
+			olxs = olxs.limit(int(limit))
 		if offset:
-			olxs = olxs.offset(int(offset)).from_self()
+			olxs = olxs.offset(int(offset))
 
 		dat = [row for row in olxs.all()]
 		dat = OLX.serialize_list(dat)
