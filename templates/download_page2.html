@@ -36,6 +36,15 @@
   <input id="sucategory" type="text" />
   <br>
   <br>
+
+  <label>Limit</label>
+  <input id="limit" type="text" value="1000" />
+  <br>
+  <br>
+  <label>Offset</label>
+  <input id="offset" type="text" value="0" />
+  <br>
+  <br>
   <label> Select Fields</label>
   <input id="field" type="text" />
 
@@ -89,7 +98,7 @@
       $('#city').autocomplete({
         minLength: 0,
         source: data,
-        multiselect: true
+        // multiselect: true
       }).on('autocompleteselect', function(ev, ui) {
         lastText = ui.item.label;
         selected_city.push(lastText);
@@ -107,7 +116,7 @@ function getSuburb(selected_city){
     $('#suburb').autocomplete({
         minLength: 0,
         source: suburb,
-        multiselect: true
+        // multiselect: true
       }).focus(function(){
           $(this).autocomplete("search", $(this).val());
       })
@@ -124,7 +133,7 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
       $('#category').autocomplete({
         minLength: 0,
         source: data,
-        multiselect: true
+        // multiselect: true
       }).focus(function(){
           $(this).autocomplete("search", $(this).val());
       })
@@ -142,7 +151,7 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
       $('#sucategory').autocomplete({
         minLength: 0,
         source: subcat,
-        multiselect: true
+        // multiselect: true
       }).focus(function(){
           $(this).autocomplete("search", $(this).val());
       })
@@ -169,7 +178,10 @@ $.get("http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/categ_list/
     })
 
    $("#download").on('click', function(){
-        var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + JSON.stringify(selected_categ) + "&subcateg=" + JSON.stringify(selected_subcateg) + "&suburb="+ JSON.stringify(selected_suburb) + "&city=" + JSON.stringify(selected_city) + "&fields=" + JSON.stringify(selected_fields)
+        var limit = $('#limit').val();
+        var offset = $('#offset').val();
+
+        var url = "http://ec2-13-58-190-193.us-east-2.compute.amazonaws.com:8000/download/?categ=" + JSON.stringify(selected_categ[0]) + "&subcateg=" + JSON.stringify(selected_subcateg[0]) + "&suburb="+ JSON.stringify(selected_suburb[0]) + "&city=" + JSON.stringify(selected_city[0]) + "&fields=" + JSON.stringify(selected_fields) + "&limit=" + limit + "&offset=" + offset
         
           window.open(url, '_blank');
 
