@@ -134,7 +134,7 @@ def csv_download():
 			print("Inside Suburb")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).filter(OLX.suburb.ilike(suburb))
 		elif city != "null":
-			print("Inside City")
+			print("Inside City", city)
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city))
 			print(olxs.count())
 
