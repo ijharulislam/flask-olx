@@ -124,22 +124,17 @@ def csv_download():
 	fields = json.loads(request.args.get('fields', ""))
 	limit = request.args.get('limit', 10000)
 	offset = request.args.get('offset', 0)
-	print(categ, subcateg, suburb)
+
 	results = []
 	olxs = []
-	print(city != "", suburb != "")
 	if request.method == "GET":
 
 		if city and city != "null" and suburb and suburb != "null":
-			print("Inside Suburb")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).filter(OLX.suburb.ilike(suburb))
 		elif city != "null":
-			print("Inside City", city)
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city))
-			print(olxs.count())
 
 		elif suburb != "null":
-			print("Inside Only Suburb")
 			olxs = db.session.query(OLX).filter(OLX.suburb.ilike(suburb))
 
 		if categ != "null" and olxs and subcateg != "null":
