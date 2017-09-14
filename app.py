@@ -118,23 +118,27 @@ def fetch_data():
 @app.route('/download/', methods=['GET'])
 def csv_download():
 	categ = request.args.get('categ', None)
-	subcateg = request.args.get('subcateg', "")
-	suburb = request.args.get('suburb', "")
-	city = request.args.get('city', "")
+	subcateg = request.args.get('subcateg', None)
+	suburb = request.args.get('suburb', None)
+	city = request.args.get('city', None)
 	fields = json.loads(request.args.get('fields', ""))
 	limit = request.args.get('limit', 1000)
 	offset = request.args.get('offset', 0)
 	print(categ, subcateg, suburb)
 	results = []
 	olxs = []
+	print(city != "")
 	if request.method == "GET":
+
 		if city and city != "" and suburb and suburb != "":
+			print("Inside Suburb")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city)).filter(OLX.suburb.ilike(suburb))
 		elif city !="":
 			print("Inside City")
 			olxs = db.session.query(OLX).filter(OLX.city.ilike(city))
 
 		elif suburb != "":
+			print("Inside Only Suburb")
 			olxs = db.session.query(OLX).filter(OLX.suburb.ilike(suburb))
 
 		if categ !="" and olxs and subcateg !="":
