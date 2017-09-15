@@ -80,7 +80,6 @@ def post_data():
 		olx = OLX(**json_dict)
 		db.session.add(olx)
 		db.session.commit()
-		print(json_dict)
 		return jsonify({'success': True}), 201
 
 
