@@ -23,7 +23,7 @@ db = SQLAlchemy()
 POSTGRES = {
     'user': 'olx',
     'pw': 'plx-spider',
-    'db': 'olx',
+    'db': 'olx_v1',
     'host': 'localhost',
     'port': '5432',
 }
@@ -164,7 +164,7 @@ def csv_download():
 			if obj:
 				results.append(obj)
 
-		data = results
+		data = list(set(results))
 
 		if data:
 			si = StringIO()
