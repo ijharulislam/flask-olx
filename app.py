@@ -161,7 +161,8 @@ def csv_download():
 			obj = {}
 			for f in fields:
 				 obj[f] =  d[f]
-			results.append(obj)
+			if obj:
+				results.append(obj)
 
 		data = results
 
