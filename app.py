@@ -172,7 +172,7 @@ def csv_download():
 			dict_writer.writeheader()
 			dict_writer.writerows(data)
 			output = make_response(si.getvalue())
-			output.headers["Content-Disposition"] = "attachment; filename=olx.csv"
+			output.headers["Content-Disposition"] = "attachment; filename={0}.csv".format(list(data[0].keys())[0])
 			output.headers["Content-type"] = "text/csv"
 			return output
 		return jsonify({'message': "No Data Found"}), 200
