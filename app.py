@@ -164,7 +164,7 @@ def csv_download():
 			if obj:
 				results.append(obj)
 
-		data = list(set(results))
+		data = results
 
 		if data:
 			si = StringIO()
