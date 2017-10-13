@@ -77,6 +77,9 @@ def post_data():
 		if not request.json:
 			abort(400)
 		json_dict = request.get_json()
+		adcode_exist = db.session.query(OLX).filter(OLX.adcode.ilike(json_dict["adcode"])).first()
+		if adcode_exist:
+			return "Already Exist"
 		olx = OLX(**json_dict)
 		db.session.add(olx)
 		db.session.commit()
@@ -109,7 +112,7 @@ def fetch_data():
 		elif suburb:
 			olxs = db.session.query(OLX).filter(OLX.suburb.ilike(suburb))
 		if olxs:
-			olxs = olxs.distinct()
+			olxs = olxs.distinct(OLX.adcode)
 			olxs = olxs.all()
 		return json.dumps(OLX.serialize_list(olxs))
 
