@@ -79,6 +79,7 @@ def post_data():
 		json_dict = request.get_json()
 		adcode_exist = db.session.query(OLX).filter(OLX.adcode.ilike(json_dict["adcode"])).first()
 		if adcode_exist:
+			print("Already Exist")
 			return "Already Exist"
 		olx = OLX(**json_dict)
 		db.session.add(olx)
