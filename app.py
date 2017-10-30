@@ -77,7 +77,8 @@ def post_data():
 		if not request.json:
 			abort(400)
 		json_dict = request.get_json()
-		adcode_exist = db.session.query(OLX).filter(OLX.adcode == json_dict["adcode"]).first()
+		adcode_exist = OLX.query.filter_by(adcode=json_dict["adcode"]).first()
+		# adcode_exist = db.session.query(OLX).filter(OLX.adcode == json_dict["adcode"]).first()
 		if adcode_exist:
 			print("Already Exist")
 			return "Already Exist"
