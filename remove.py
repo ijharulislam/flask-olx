@@ -7,4 +7,5 @@ except:
 
 cur = conn.cursor()
 cur.execute("""DELETE FROM olx a USING olx b WHERE a.id < b.id AND a.adcode = b.adcode;""")
+print("Removed Duplicates")
 cur.close()
